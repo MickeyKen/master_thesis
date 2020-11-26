@@ -293,7 +293,7 @@ D-UDの総重量を軽減するために，Intel社のNext Unit of Computing (�
 D-UDはメインPCであるNUCと，youBotの内部搭載されたPCと通信しながら，１つのシステムとして動作する．この通信は，車輪の姿勢やオドメトリなどのデータの送受信を頻繁に行うため，LANケーブルを用いて有線接続する必要がある．また，D-UDの操作時は，D-UDのNUCに無線接続したラップトップPCなどから操作することが望ましい．そこで，D-UDのNUCにトラベルルータをUSB接続し，
 
 \subsection{プロジェクタプラットフォーム}
-D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-PT)機構を採用している(Fig.\ref{pantilt})\cite{pantilt}．プロジェクタで投影した映像の線形的な移動をPan-Tilt機構を用いることで実現する．また，プロジェクタはLG HF80LSを採用した．Fig.\ref{LG}にLG HF80LSの外観を，Table\ref{table:LG}に仕様を示す．D-UDはプロジェクタを2個搭載する必要があるため，消費電力量の少ないプロジェクタが望ましい．LG HF80LSは，UD2.0で搭載されたプロジェクタ(NEC NP64J)の消費電力が292[w]に対して，140[w]であり約半分の消費電力である．
+D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-PT)機構を採用している(Fig.\ref{pantilt})\cite{pantilt}．プロジェクタで投影した映像の線形的な移動をPan-Tilt機構を用いることで実現する．
 
 \begin{figure}[h]
 \begin{center}
@@ -313,6 +313,9 @@ D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-
 		Weight & 5.5[kg] \\\hline
 	\end{tabular}
 \end{table}
+
+\subsubsection{プロジェクタ}
+プロジェクタはLG HF80LSを採用した．Fig.\ref{LG}にLG HF80LSの外観を，Table\ref{table:LG}に仕様を示す．D-UDはプロジェクタを2個搭載する必要があるため，消費電力量の少ないプロジェクタが望ましい．LG HF80LSは，UD2.0で搭載されたプロジェクタ(NEC NP64J)の消費電力が292[w]に対して，140[w]であり約半分の消費電力である．
 
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
@@ -342,32 +345,42 @@ D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-
 \end{minipage}
 \end{figure}
 
-%\begin{figure}[h]
-%\begin{center}
-%\includegraphics[clip, width=8cm]{figs/lg_projector.eps}
-%\caption{LG HF80LS}
-%\label{LG}
-%\end{center}
-%\end{figure}
+\subsubsection{パン・チルトモータ}
+D-UDではモータとして，Robotis社のDynamixel MX-64ATを使用している．角度制御分解能が高く，円滑な投影画像の移動やぶれの改善が期待できる．MX-64ATの外観をFig.\ref{Dynamixel}に，仕様をTable\ref{table:Dynamixel}に示す．
 
-%\begin{table}[h]
-%	\caption{Specifications of LG HF80LS}
-%	\label{table:LG_TABLE}
-%	\centering 
-%	\begin{tabular}[tbp]{|c|c|}
-%		\hline 
-%		External size(WDH) & 108×252×144[mm] \\\hline
-%		Weight & 2.1[kg] \\\hline
-%		Resolution & 1920×1080 \\\hline
-%		Brightness & 2000[lm] \\\hline
-%		Light source & DLP \\\hline
-%		Power consumption & 140[w] \\\hline
-%	\end{tabular}
-%\end{table}
+\begin{figure}
+\begin{minipage}{0.4\textwidth}
+\begin{center}
+\includegraphics[scale=0.4]{figs/MX_64AT.eps}
+\caption{Dynamixel MX-64AT}
+\label{Dynamixel}
+\end{center}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\begin{center}
+\makeatletter
+\def\@captype{table}
+\makeatother
+\caption{Specifications of Dynamixel MX-64AT}
+	\begin{tabular}[tbp]{|c|c|}
+		\hline 
+		Dimensions (WHD) & 40.2x61.1x41[mm] \\\hline
+		Weight & 165[g] \\\hline
+		Resolution & 4096[pulse/rev] \\\hline
+		Stall Torque & 6.0[Nm] \\\hline
+		No Load Speed & 63[rev/min] \\\hline
+	\end{tabular}
+\label{table:Dynamixel}
+\end{center}
+\end{minipage}
+\end{figure}
+
+\subsubsection{プレート}
+D-UDは上部のプレートに2台の雲台を搭載させるため，雲台同士の衝突を回避する必要がある．そこで，雲台同士の距離を広げるため，アルミプレートを作成した(Fig.\ref{plate})．
 
 \begin{figure}[t]
 \begin{center}
-\includegraphics[clip, width=10cm]{figs/top_plate.png}
+\includegraphics[clip, width=8cm]{figs/top_plate.png}
 \caption{Overview of original top plate}
 \label{plate}
 \end{center}
