@@ -240,7 +240,7 @@ D-UDはこれらのコンセプトを引き継ぐと共に，異なる位置の�
 \begin{figure}[tbp]
 
 	\begin{center}
-	\subfigure[Approaching human]{\includegraphics[width=6cm]{figs/dud_1.eps}
+	\subfigure[Approaching human]{\includegraphics[width=6cm]{figs/dud_1_white.eps}
 	\label{fig:lefttop}}
 	%\hspace{10mm}
 	\subfigure[Arrived in front of user]{\includegraphics[width=6cm]{figs/dud_2.eps}
@@ -290,7 +290,15 @@ D-UDの総重量を軽減するために，Intel社のNext Unit of Computing (�
 \end{minipage}
 \end{figure}
 
-D-UDはメインPCであるNUCと，youBotの内部搭載されたPCと通信しながら，１つのシステムとして動作する．この通信は，車輪の姿勢やオドメトリなどのデータの送受信を頻繁に行うため，LANケーブルを用いて有線接続する必要がある．また，D-UDの操作時は，D-UDのNUCに無線接続したラップトップPCなどから操作することが望ましい．そこで，D-UDのNUCにトラベルルータをUSB接続し，
+D-UDはメインPCであるNUCと，youBotの内部搭載されたPCと通信しながら，１つのシステムとして動作する．この通信は，車輪の姿勢やオドメトリなどのデータの送受信を頻繁に行うため，LANケーブルを用いた有線接続が必要である．一方，外部からD-UDの操作を行う場合，無線接続したPCから操作することが望ましい．そこで，D-UDのメインPC(NUC)にトラベルルータを接続することで，環境に設置されたWifiに依存することなく，D-UDを無線接続したPCから操作を可能にした(Fig.\ref{computer_connection})．
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[clip, width=10cm]{figs/configuration.eps}
+\caption{Computer connection diagram}
+\label{computer_connection}
+\end{center}
+\end{figure}
 
 \subsection{プロジェクタプラットフォーム}
 D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-PT)機構を採用している(Fig.\ref{pantilt})\cite{pantilt}．プロジェクタで投影した映像の線形的な移動をPan-Tilt機構を用いることで実現する．
