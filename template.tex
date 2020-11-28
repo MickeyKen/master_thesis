@@ -237,7 +237,7 @@ D-UDはこれらのコンセプトを引き継ぐと共に，異なる位置の�
 
 %\section{D-UDが提供する情報投影手法}
 
-\begin{figure}[tbp]
+\begin{figure}[htbp]
 
 	\begin{center}
 	\subfigure[Approaching human]{\includegraphics[width=6cm]{figs/dud_1_white.eps}
@@ -256,7 +256,7 @@ D-UDはこれらのコンセプトを引き継ぐと共に，異なる位置の�
 	\label{fig:twofig}
 \end{figure}
 
-\section{D-UDによる人への情報支援}
+%\section{D-UDによる人への情報支援}
 
 
 \section{ハードウェア構成}
@@ -294,7 +294,7 @@ D-UDはメインPCであるNUCと，youBotの内部搭載されたPCと通信し
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[clip, width=10cm]{figs/configuration.eps}
+\includegraphics[clip, width=12cm]{figs/configuration.eps}
 \caption{Computer connection diagram}
 \label{computer_connection}
 \end{center}
@@ -394,6 +394,17 @@ D-UDは上部のプレートに2台の雲台を搭載させるため，雲台同
 \end{center}
 \end{figure}
 
+\begin{table}[h]
+	\caption{Specifications of original top plate}
+	\label{table:plate}
+	\centering 
+	\begin{tabular}[tbp]{|c|c|}
+		\hline 
+		External size(WDH) & 650×290×5[mm] \\\hline
+		Weight & 1.6[kg] \\\hline
+	\end{tabular}
+\end{table}
+
 \subsection{センサ}
 D-UDは異なる位置の人物に向けて情報支援を行う必要がある．
 \begin{figure}
@@ -482,6 +493,10 @@ ROSとは，ロボットソフトウェアプラットフォームの一種で�
 
 %\ref{chap:control}節にD-UDのコアとなる制御パッケージについて述べる．また，\ref{chap:recognition}節でカメラやLidarを用いた環境認識プログラムの構成について述べる．
 
+\subsection{ロボットモデリングとシミュレーション}
+ROSでは，ロボットの制御の視覚化ツールとシミュレーションツールが存在する．これらのツールを利用することで，ロボットの実機の制御プログラムを開発する際，計算機上でシミュレートすることで，手軽に事前の動作確認が可能となり開発効率が改善される．本研究でも，D-UDの効率的な開発を目指しD-UDのURDF(URDF(Unified
+Robot Description)モデルの作成を行った(Fig.\ref{fig:left})．Fig.\ref{fig:right}はRViz(ROS Visualization)という3次元視覚化ツールを用いてD-UDのURDFモデルを表示している．また，シミュレーションツールにはGAZEBO\cite{GAZEBO}が用意されている．GAZEBOは様々なロボットセンサをモデル化するだけでなく，実世界の剛体物理もシミュレーション環境中でモデル化できる3Dロボットモデルシミュレータである．
+
 \subsection{D-UDの制御パッケージ}
 
 \begin{figure}[tbp]
@@ -513,22 +528,21 @@ ROSとは，ロボットソフトウェアプラットフォームの一種で�
 \scalebox{0.9}[0.9]{
   \begin{tabular}{|c|p{10cm}|}\hline
    ノード名 & 機能説明 \\\hline
-   joy\_node & kinect v2からRGBD情報を取得するノード． \\ \hline
-   joy\_teleop\_node & kinect v2からRGBD情報を取得するノード． \\ \hline
-   keyboard\_teleop\_node & kinect v2からRGBD情報を取得するノード． \\ \hline
-   youbot\_driver & kinect v2からRGBD情報を取得するノード． \\ \hline
-   move\_base & kinect v2からRGBD情報を取得するノード． \\ \hline
-   amcl & kinect v2からRGBD情報を取得するノード． \\ \hline
-   map\_server & kinect v2からRGBD情報を取得するノード． \\ \hline
-   joint\_states\_publisher & kinect v2からRGBD情報を取得するノード． \\ \hline
-   robot\_states\_publisher & kinect v2からRGBD情報を取得するノード． \\ \hline
-   dynamixel\_workbench\_controllers & kinect v2からRGBD情報を取得するノード． \\ \hline
-   front\_lidar & kinect v2からRGBD情報を取得するノード． \\ \hline
-   rear\_lidar & kinect v2からRGBD情報を取得するノード． \\ \hline
-   merge\_lidar\_node & kinect v2からRGBD情報を取得するノード． \\ \hline
-   left\_projection\_node & kinect v2からRGBD情報を取得するノード． \\ \hline
-   right\_projector\_node & kinect v2からRGBD情報を取得するノード． \\ \hline
-   rviz & kinect v2からRGBD情報を取得するノード． \\ \hline
+   joy\_node & joystickの入力信号を受信して，トピックに変換するノード． \\ \hline
+   joy\_teleop\_node & joy\_nodeからパブリッシュされたトピックを受信し，youBotの車輪とパン・チルト機構のモータを制御するトピックをパブリッシュするノード． \\ \hline
+   keyboard\_teleop\_node & キーボードの入力信号を受信して，youBotの車輪とパン・チルト機構のモータを制御するトピックをパブリッシュするノード． \\ \hline
+   youbot\_driver & 速度のトピックをサブスクライブし，youBotの車輪制御を行うノード． \\ \hline
+   move\_base & 目標位置と現在位置のトピックをサブスライブして，経路計画とナビゲーションを実行するノード． \\ \hline
+   amcl & Lidarのセンサ値をサブスクライブして，自己位置推定を行うノード． \\ \hline
+   map\_server & 事前に作成したマップの画像情報をパブリッシュするノード． \\ \hline
+   joint\_states\_publisher & パン・チルト機構のモータやyouBotの車輪の各関節角度を追従し，パブリッシュするノード． \\ \hline
+   robot\_states\_publisher & joint\_states\_publisherがパブリッシュするトピックをサブスクライブし，URDFモデルと照合した後ロボットの姿勢のトピックをパブリッシュするノード． \\ \hline
+   dynamixel\_workbench\_controllers & パン・チルト機構のモータの目標角度をサブスライブし，Dynamixelを位置制御するノード． \\ \hline
+   front\_lidar & D-UDの前方のHokuyo UTM-30LXのセンサ値をパブリッシュするノード． \\ \hline
+   rear\_lidar & D-UDの後方のHokuyo UTM-30LXのセンサ値をパブリッシュするノード． \\ \hline
+   merge\_lidar\_node & front\_lidarとrear\_lidarからパブリッシュされたトピックをサブスクライブし，それらを統合した後パブリッシュするノード． \\ \hline
+   left\_projection\_node & robot\_states\_publisherからパブリッシュされたトピックを受信し，パラメータから取得した画像・動画名を歪み補正して左側のプロジェクタから投影するノード，． \\ \hline
+   right\_projector\_node & robot\_states\_publisherからパブリッシュされたトピックを受信し，パラメータから取得した画像・動画名を歪み補正して右側のプロジェクタから投影するノード． \\ \hline
 
   \end{tabular}
 }
