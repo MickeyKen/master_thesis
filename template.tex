@@ -407,6 +407,7 @@ D-UDは上部のプレートに2台の雲台を搭載させるため，雲台同
 
 \subsection{センサ}
 D-UDは異なる位置の人物に向けて情報支援を行う必要がある．
+
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
 \begin{center}
@@ -497,8 +498,6 @@ ROSとは，ロボットソフトウェアプラットフォームの一種で�
 ROSでは，ロボットの制御の視覚化ツールとシミュレーションツールが存在する．これらのツールを利用することで，ロボットの実機の制御プログラムを開発する際，計算機上でシミュレートすることで，手軽に事前の動作確認が可能となり開発効率が改善される．本研究でも，D-UDの効率的な開発を目指しD-UDのURDF(URDF(Unified
 Robot Description)モデルの作成を行った(Fig.\ref{fig:left})．Fig.\ref{fig:right}はRViz(ROS Visualization)という3次元視覚化ツールを用いてD-UDのURDFモデルを表示している．また，シミュレーションツールにはGAZEBO\cite{GAZEBO}が用意されている．GAZEBOは様々なロボットセンサをモデル化するだけでなく，実世界の剛体物理もシミュレーション環境中でモデル化できる3Dロボットモデルシミュレータである．
 
-\subsection{D-UDの制御パッケージ}
-
 \begin{figure}[tbp]
 	\begin{center}
 	\subfigure[Simulation of Dual Ubiquitous Display main body in GAZEBO]{\includegraphics[width=5.5cm]{figs/dud_gazebo.eps}
@@ -510,6 +509,17 @@ Robot Description)モデルの作成を行った(Fig.\ref{fig:left})．Fig.\ref{
 	\caption{Robot Modeling in GAZEBO/ROS}
 	\label{fig:Modeling}
 \end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=10cm]{figs/dud_gazebo_environment.eps}
+\caption{Overview of GAZEBO}
+\label{dud_gazebo_environment}
+\end{center}
+\end{figure}
+
+\subsection{D-UDの制御パッケージ}
+
 
 \newpage
 \begin{figure}[t]
