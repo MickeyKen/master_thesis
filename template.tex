@@ -408,6 +408,7 @@ D-UDは上部のプレートに2台の雲台を搭載させるため，雲台同
 \subsection{センサ}
 D-UDは異なる位置の人物に向けて情報支援を行う必要がある．
 
+\subsubsection{カメラ}
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
 \begin{center}
@@ -434,6 +435,9 @@ D-UDは異なる位置の人物に向けて情報支援を行う必要がある�
 \end{center}
 \end{minipage}
 \end{figure}
+
+\subsubsection{Laser Range Finder}
+D-UDに北陽電機のLaser Range Finder(以後 LRF)であるUTM-30LXを2台搭載している(Fig.\ref{hokuyo}).Fig.\ref{DUD}で示したように，D-UDの前後にLRFを取り付けることで，全方位をセンシングすることができる．このLRFは，D-UDの自己位置推定や障害物等との衝突回避に用いられる．Table\ref{table:hokuyo}にLRFの仕様を示す.
 
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
@@ -500,22 +504,16 @@ Robot Description)モデルの作成を行った(Fig.\ref{fig:left})．Fig.\ref{
 
 \begin{figure}[tbp]
 	\begin{center}
-	\subfigure[Simulation of Dual Ubiquitous Display main body in GAZEBO]{\includegraphics[width=5.5cm]{figs/dud_gazebo.eps}
+	\subfigure[Simulation of Dual Ubiquitous Display main body in GAZEBO]{\includegraphics[height=4cm]{figs/dud_gazebo.eps}
 	\label{fig:left}}
-	\hspace{15mm}
-	\subfigure[URDF model of Dual Ubiquitous Display in Rviz]{\includegraphics[width=5cm]{figs/dud_urdf.eps}
+	\hspace{5mm}
+	\subfigure[URDF model of Dual Ubiquitous Display in Rviz]{\includegraphics[height=4cm]{figs/dud_urdf.eps}
 	\label{fig:right}}
+	\subfigure[Dual Ubiquitous Display 3D model in the GAZEBO environment. Blue area indicates the range of LIDAR scanning.]{\includegraphics[width=9.3cm]{figs/dud_gazebo_environment.eps}
+	\label{fig:bottom}}
 	\end{center}
 	\caption{Robot Modeling in GAZEBO/ROS}
 	\label{fig:Modeling}
-\end{figure}
-
-\begin{figure}[t]
-\begin{center}
-\includegraphics[clip, width=10cm]{figs/dud_gazebo_environment.eps}
-\caption{Overview of GAZEBO}
-\label{dud_gazebo_environment}
-\end{center}
 \end{figure}
 
 \subsection{D-UDの制御パッケージ}
