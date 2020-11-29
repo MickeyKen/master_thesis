@@ -409,6 +409,8 @@ D-UDは上部のプレートに2台の雲台を搭載させるため，雲台同
 D-UDは異なる位置の人物に向けて情報支援を行う必要がある．
 
 \subsubsection{カメラ}
+D-UDに360°パノラマ画像が取得なRICOH Theta Vを搭載した(Fig.\ref{ThetaV})．Theta Vは2枚の魚眼レンズで撮影した円形画像を，正距円筒図法により360°パノラマ画像に変換するカメラである．D-UDは，UD2.1よりも広範囲な環境認識が必要になるためTheta Vを採用している．Theta Vの仕様をTable\ref{table:ThetaV_TABLE}に示す．
+
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
 \begin{center}
@@ -437,7 +439,7 @@ D-UDは異なる位置の人物に向けて情報支援を行う必要がある�
 \end{figure}
 
 \subsubsection{Laser Range Finder}
-D-UDに北陽電機のLaser Range Finder(以後 LRF)であるUTM-30LXを2台搭載している(Fig.\ref{hokuyo}).Fig.\ref{DUD}で示したように，D-UDの前後にLRFを取り付けることで，全方位をセンシングすることができる．このLRFは，D-UDの自己位置推定や障害物等との衝突回避に用いられる．Table\ref{table:hokuyo}にLRFの仕様を示す.
+D-UDに北陽電機のLaser Range Finder(以後 LRF)であるUTM-30LXを2台搭載している(Fig.\ref{hokuyo})．Fig.\ref{DUD}で示したように，D-UDの前後にLRFを取り付けることで，全方位をセンシングすることができる．このLRFは，D-UDの自己位置推定や障害物等との衝突回避に用いられる．Table\ref{table:hokuyo}にLRFの仕様を示す.
 
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
@@ -493,31 +495,11 @@ D-UDに北陽電機のLaser Range Finder(以後 LRF)であるUTM-30LXを2台搭�
 
 \section{ソフトウェア構成}
 D-UDの制御には，移動プラットフォームの制御，複数のセンサを使った周囲の環境情報の認識，パン・チルト機構プロジェクタの制御など複数の制御を並列的に処理する必要がある．そこで，本研究ではD-UDの開発において並列処理とコードの再利用性など，ロボット効率的な開発を可能にする，Willow Garage社のROS(Robot Operating System)\cite{ROS}を利用する．
+
 \subsection{ROSミドルウェア}
-ROSとは，ロボットソフトウェアプラットフォームの一種である．ROSはノードとよばれるプロセス間で，トピックを介してメッセージを交換することができる．開発者は各プロセスに必要なメッセージの受け渡しを実行することで，容易に各機能の並列処理を行うことができる．D-UDのソフトウェア制御では，各ノードがパブリッシュ・サブスクライブしデータを送受信することで，すべてのプログラムの並列処理を可能にしている．
+ROSとは，ロボットソフトウェアプラットフォームの一種である．ROSはノードとよばれるプロセス間で，トピックを介してメッセージを交換することができる．開発者は各プロセスに必要なメッセージの受け渡しを実行することで，容易に各機能の並列処理を行うことができる．D-UDのソフトウェア制御では，各ノードがパブリッシュ・サブスクライブしデータを送受信することで，すべてのプログラムの並列処理を可能にしている．開発者は各ノードに必要なデータの通信を考慮するだけで，容易にロボットのシステムの拡張を行うことができる．D-UDに実装したコアとなるノード群をFig.\ref{rqt}に示し，各ノードの機能説明をTable\ref{table:ros_node}に示す．
 
 %\ref{chap:control}節にD-UDのコアとなる制御パッケージについて述べる．また，\ref{chap:recognition}節でカメラやLidarを用いた環境認識プログラムの構成について述べる．
-
-\subsection{ロボットモデリングとシミュレーション}
-ROSでは，ロボットの制御の視覚化ツールとシミュレーションツールが存在する．これらのツールを利用することで，ロボットの実機の制御プログラムを開発する際，計算機上でシミュレートすることで，手軽に事前の動作確認が可能となり開発効率が改善される．本研究でも，D-UDの効率的な開発を目指しD-UDのURDF(URDF(Unified
-Robot Description)モデルの作成を行った(Fig.\ref{fig:left})．Fig.\ref{fig:right}はRViz(ROS Visualization)という3次元視覚化ツールを用いてD-UDのURDFモデルを表示している．また，シミュレーションツールにはGAZEBO\cite{GAZEBO}が用意されている．GAZEBOは様々なロボットセンサをモデル化するだけでなく，実世界の剛体物理もシミュレーション環境中でモデル化できる3Dロボットモデルシミュレータである．
-
-\begin{figure}[tbp]
-	\begin{center}
-	\subfigure[Simulation of Dual Ubiquitous Display main body in GAZEBO]{\includegraphics[height=4cm]{figs/dud_gazebo.eps}
-	\label{fig:left}}
-	\hspace{5mm}
-	\subfigure[URDF model of Dual Ubiquitous Display in Rviz]{\includegraphics[height=4cm]{figs/dud_urdf.eps}
-	\label{fig:right}}
-	\subfigure[Dual Ubiquitous Display 3D model in the GAZEBO environment. Blue area indicates the range of LIDAR scanning.]{\includegraphics[width=9.3cm]{figs/dud_gazebo_environment.eps}
-	\label{fig:bottom}}
-	\end{center}
-	\caption{Robot Modeling in GAZEBO/ROS}
-	\label{fig:Modeling}
-\end{figure}
-
-\subsection{D-UDの制御パッケージ}
-
 
 \newpage
 \begin{figure}[t]
@@ -557,6 +539,23 @@ Robot Description)モデルの作成を行った(Fig.\ref{fig:left})．Fig.\ref{
   \end{center}
 \end{table}
 
+\subsection{ロボットモデリングとシミュレーション}
+ROSでは，ロボットの制御の視覚化ツールとシミュレーションツールが存在する．これらのツールを利用することで，ロボットの実機の制御プログラムを開発する際，計算機上でシミュレートすることで，手軽に事前の動作確認が可能となり開発効率が改善される．本研究でも，D-UDの効率的な開発を目指しD-UDのURDF(URDF(Unified
+Robot Description)モデルの作成を行った(Fig.\ref{fig:left})．Fig.\ref{fig:right}はRViz(ROS Visualization)という3次元視覚化ツールを用いてD-UDのURDFモデルを表示している．また，シミュレーションツールにはGAZEBO\cite{GAZEBO}が用意されている．GAZEBOは様々なロボットセンサをモデル化するだけでなく，実世界の剛体物理もシミュレーション環境中でモデル化できる3Dロボットモデルシミュレータである．
+
+\begin{figure}[tbp]
+	\begin{center}
+	\subfigure[Simulation of Dual Ubiquitous Display main body in GAZEBO]{\includegraphics[height=4cm]{figs/dud_gazebo.eps}
+	\label{fig:left}}
+	\hspace{5mm}
+	\subfigure[URDF model of Dual Ubiquitous Display in Rviz]{\includegraphics[height=4cm]{figs/dud_urdf.eps}
+	\label{fig:right}}
+	\subfigure[Dual Ubiquitous Display 3D model in the GAZEBO environment. Blue area indicates the range of LIDAR scanning.]{\includegraphics[width=9.3cm]{figs/dud_gazebo_environment.eps}
+	\label{fig:bottom}}
+	\end{center}
+	\caption{Robot Modeling in GAZEBO/ROS}
+	\label{fig:Modeling}
+\end{figure}
 
 \chapter{深層強化学習を用いたUDの行動制御}\label{chap:proposal}
 第\ref{chap:introduction}章で述べた課題に対する提案手法を詳しく説明する．
