@@ -225,7 +225,7 @@ D-UDはプロジェクタを2台搭載する自律移動型投影ロボットで
 \item Wenbと連携したコンテンツの表示(適応表示)
 \end{itemize}
 
-D-UDはこれらのコンセプトを引き継ぐと共に，異なる位置の人に同時に情報投影できる効率的な情報支援を行うため，全方向四輪移動プラットフォームにパン・チルト回転機構を搭載したプロジェクタ2台から構成されている(Fig.\ref{DUD})．さらに，周囲360°のRGB情報が取得可能なカメラと距離30m，270°の範囲をデータ出力するレーザスキャナ(LRF)を搭載し，D-UDの活動環境を広範囲に認識することで人の見やすい場所に情報投影を行う人間中心の視覚的情報支援が可能である．
+D-UDはこれらのコンセプトを引き継ぐと共に，異なる位置の人に同時に情報投影できる効率的な情報支援を行うため，全方向四輪移動プラットフォームにパン・チルト回転機構を搭載したプロジェクタ2台から構成されている(Fig.\ref{DUD})．さらに，周囲360°パノラマ画像が取得可能なカメラと距離30m，270°の範囲をデータ出力するレーザスキャナ(LRF)を搭載し，D-UDの活動環境を広範囲に認識することで人の見やすい場所に情報投影を行う人間中心の視覚的情報支援が可能である．また，D-UDは2つのプロジェクタから映像を投影することで，異なる位置の2人へ同時に投影することが可能であり，UD2.1よりも多くの人への効率的な情報支援を行う．さらに，両プロジェクタの映像を重ね合わせて1つの映像にすることで，映像の切り替えが少なく人に優しい情報支援の提供が可能である．Fig.\ref{fig:twofig}はその具体例を示している．まず，D-UDが人を認識し接近を行う(Fig.\ref{fig:lefttop})．ユーザの前まで到着が完了すると，ユーザの「このフロアのマップを見せてください」という問いかけに対して，左側のプロジェクタでフロアのマップを投影する(Fig.\ref{fig:leftbottom})．そして，ユーザの「理研究室の場所を教えて下さい」という問に対して，左側のプロジェクタで投影したマップの上に，右側で目的の場所に関連した付加情報を投影する(Fig.\ref{fig:rightbottom})．
 
 \begin{figure}[t]
 \begin{center}
@@ -497,11 +497,10 @@ D-UDに北陽電機のLaser Range Finder(以後 LRF)であるUTM-30LXを2台搭�
 D-UDの制御には，移動プラットフォームの制御，複数のセンサを使った周囲の環境情報の認識，パン・チルト機構プロジェクタの制御など複数の制御を並列的に処理する必要がある．そこで，本研究ではD-UDの開発において並列処理とコードの再利用性など，ロボット効率的な開発を可能にする，Willow Garage社のROS(Robot Operating System)\cite{ROS}を利用する．
 
 \subsection{ROSミドルウェア}
-ROSとは，ロボットソフトウェアプラットフォームの一種である．ROSはノードとよばれるプロセス間で，トピックを介してメッセージを交換することができる．開発者は各プロセスに必要なメッセージの受け渡しを実行することで，容易に各機能の並列処理を行うことができる．D-UDのソフトウェア制御では，各ノードがパブリッシュ・サブスクライブしデータを送受信することで，すべてのプログラムの並列処理を可能にしている．開発者は各ノードに必要なデータの通信を考慮するだけで，容易にロボットのシステムの拡張を行うことができる．D-UDに実装したコアとなるノード群をFig.\ref{rqt}に示し，各ノードの機能説明をTable\ref{table:ros_node}に示す．
+ROSとは，ロボットソフトウェアプラットフォームの一種である．ROSはノードとよばれるプロセス間で，トピックを介してメッセージを交換することができる．開発者は各プロセスに必要なメッセージの受け渡しを実行することで，容易に各機能の並列処理を行うことができる．D-UDのソフトウェア制御では，各ノードがパブリッシュ・サブスクライブしデータを送受信することで，すべてのプログラムの並列処理を可能にしている．D-UDに実装したコアとなるノード群をFig.\ref{rqt}に示し，各ノードの機能説明をTable\ref{table:ros_node}に示す．コアノード群は，アクチュエータやセンサの起動からキーボードやjoystickを用いたD-UDマニュアル操作などのD-UDの基本的な機能を提供する．また，D-UD全体の座標管理やLidarの距離情報を用いたナビゲーション，プロジェクタの投影面の計算も行っている．そのため，開発者は各ノードに必要なデータの通信を考慮するだけで，容易にD-UDのシステムの拡張を行うことができる．
 
 %\ref{chap:control}節にD-UDのコアとなる制御パッケージについて述べる．また，\ref{chap:recognition}節でカメラやLidarを用いた環境認識プログラムの構成について述べる．
 
-\newpage
 \begin{figure}[t]
 \begin{center}
 \includegraphics[clip, width=18cm, angle=90]{figs/dud_rqt_graph.eps}
@@ -509,9 +508,8 @@ ROSとは，ロボットソフトウェアプラットフォームの一種で�
 \label{rqt}
 \end{center}
 \end{figure}
-\newpage
 
-\begin{table}[h]
+\begin{table}[t]
 \begin{center}
 \caption{各ノード名および機能}
 \label{table:ros_node}
@@ -550,7 +548,7 @@ Robot Description)モデルの作成を行った(Fig.\ref{fig:left})．Fig.\ref{
 	\hspace{5mm}
 	\subfigure[URDF model of Dual Ubiquitous Display in Rviz]{\includegraphics[height=4cm]{figs/dud_urdf.eps}
 	\label{fig:right}}
-	\subfigure[Dual Ubiquitous Display 3D model in the GAZEBO environment. Blue area indicates the range of LIDAR scanning.]{\includegraphics[width=9.3cm]{figs/dud_gazebo_environment.eps}
+	\subfigure[Dual Ubiquitous Display 3D model in the GAZEBO environment. Blue area indicates the range of LIDAR scanning.]{\includegraphics[width=9.2cm]{figs/dud_gazebo_environment2.eps}
 	\label{fig:bottom}}
 	\end{center}
 	\caption{Robot Modeling in GAZEBO/ROS}
