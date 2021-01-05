@@ -303,11 +303,11 @@ D-UDはメインPCであるNUCと，youBotの内部搭載されたPCと通信し
 \end{figure}
 
 \subsection{プロジェクタプラットフォーム}
-D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-PT)機構を採用している(Fig.\ref{pantilt})\cite{pantilt}．プロジェクタで投影した映像の線形的な移動をPan-Tilt機構を用いることで実現する．
+D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-PT)機構を採用している(Fig.\ref{pantilt})\cite{pantilt}．プロジェクタで投影した映像の線形的な移動をPan-Tilt機構で実現する．また，パン関節の可動域は125°であり，チルト関節の可動域は280°である．
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[clip, width=6cm]{figs/pantilt.png}
+\includegraphics[clip, width=5.5cm]{figs/pantilt.png}
 \caption{Picture of Pan-Tilt mechanism}
 \label{pantilt}
 \end{center}
@@ -323,6 +323,14 @@ D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-
 		Weight & 5.5[kg] \\\hline
 	\end{tabular}
 \end{table}
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[clip, width=11cm]{figs/pantilt_range_limit.eps}
+\caption{Range of motion}
+\label{pantilt_range_limit}
+\end{center}
+\end{figure}
 
 \subsubsection{プロジェクタ}
 プロジェクタはLG HF80LSを採用した．Fig.\ref{LG}にLG HF80LSの外観を，Table\ref{table:LG}に仕様を示す．D-UDはプロジェクタを2個搭載する必要があるため，消費電力量の少ないプロジェクタが望ましい．LG HF80LSは，UD2.0で搭載されたプロジェクタ(NEC NP64J)の消費電力が292[w]に対して，140[w]であり約半分の消費電力である．
@@ -396,7 +404,7 @@ D-UDは上部のプレートに2台の雲台を搭載させるため，雲台同
 \end{center}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[t]
 	\caption{Specifications of original top plate}
 	\label{table:plate}
 	\centering 
