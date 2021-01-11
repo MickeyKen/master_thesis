@@ -21,6 +21,8 @@
 
 \usepackage{url}
 
+\usepackage{listings}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 李研テンプレートを作成するにあたって追加したパッケージ
 % 参考文献を参照する際の\citeの挙動
@@ -326,7 +328,7 @@ D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[clip, width=11cm]{figs/pantilt_range_limit.eps}
+\includegraphics[clip, width=11cm]{figs/angle_limit.eps}
 \caption{Range of motion}
 \label{pantilt_range_limit}
 \end{center}
@@ -654,7 +656,13 @@ UDが人に快適かつ効果的に情報投影を行うためには，人の視
 
 
 \subsection{GAZEBOとROSを用いた分散アーキテクチャ}
-\ref{DQNの問題}節で述べた学習時間の短縮を可能にする仕組みとして，本研究ではエージェントの分散学習の導入を行う．
+\ref{DQNの問題}節で述べた学習時間の短縮を可能にする仕組みとして，本研究ではGGAZEBOとROSを用いたエージェントの分散学習の導入を行う．複数のエージェントで学習を行う場合，各エージェントにつき各環境が必要になるため複数のシミュレーション環境を並列して同時に起動しなければならない．ROSはマスタ(master)というノード間の接続とメッセージ通信の実現に必要なサーバ（ネームサーバ）を持つ．しかし，1つのマスターにつき同名のノードを複数登録することはできない．---<namepace>を使った場合の問題点を書く。---よって，本研究では異なるROSマスタを設定し，それぞれ独立したROSネットワークを構築することとする．ROSマスタとノード間の通信はXML-PRCを用いて行われ，環境変数の「\$ROS\_MASTER\_URI」と「\$GAZEBO\_MASTER\_URI」により通信ポートが決定される．そのため，任意のアドレスに変更するためには，ターミナルで以下のコマンドを実行する．
+
+\begin{lstlisting}
+export ROS_MASTER_URI=http://localhost:11350
+export GAZEBO_MASTER_URI=http://localhost:11340
+\end{lstlisting}
+
 \subsection{DQNを用いた行動制御}
 
 \chapter{実験}
