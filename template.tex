@@ -663,6 +663,22 @@ export ROS_MASTER_URI=http://localhost:11350
 export GAZEBO_MASTER_URI=http://localhost:11340
 \end{lstlisting}
 
+\ref{fig:righttop_dqn}は，本システムのアーキテクチャの全体図である．各ROSネットワークのスレーブエージェントは各環境(GAZEBO)から遷移データを収集しマスタエージェントに送信する．そして，マスタエージェントがPrioritized Experience Replayを用いて遷移データのサンプリングを行った後，深層ニューラルネットワークで学習を行い，スレーブエージェントのネットワークの重みも更新する．
+
+\begin{figure}[tbp]
+
+	\begin{center}
+	\subfigure[single Agent]{\includegraphics[width=4cm]{figs/single_agent.eps}
+	\label{fig:lefttop_dqn}}
+	\hspace{10mm}
+	\subfigure[Multi agent]{\includegraphics[width=7cm]{figs/multi_agent.eps}
+	\label{fig:righttop_dqn}}
+	\end{center}
+	
+	\caption{Projection flow of Dual Ubiquitous Display}
+	\label{fig:twofig_dqn}
+\end{figure}
+
 \subsection{DQNを用いた行動制御}
 
 \chapter{実験}
