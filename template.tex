@@ -699,15 +699,58 @@ export GAZEBO_MASTER_URI=http://localhost:11340
 ここで，$N$はエージェント数を表し，$\epsilon=0.4$,$\alpha=7$とする．
 
 \subsection{DQNを用いた行動制御}
+DQNを用いてUDが人へ情報を支援するための行動獲得を目指す．Fig.\ref{structure}はディープニューラルネットワークモデルのアーキテクチャを示す．本モデルは入力から出力までの全ての層間を全結合層で結合し，入力値に7ノード，出力層に8ノードを持つ．入力値には，UDのパン関節の現在角度，チルト関節の現在角度，車輪の現在直進速度及び，車輪の移動方向で取得したLidarの値2点である．また，それらに加えUDと投影位置までの直線距離$d$となす角度$\theta$の計7個を入力値としている．出力値の8個の行動の詳細を以下に示す．
+
+\begin{itemize}
+    \item $action1$ - No operation 
+    \item $action2$ - Stop ($v = 0.0 m/s$)
+    \item $action3$ - Move Forwward ($v = +2.0 m/s$)
+    \item $action4$ - Move Backword ($v = -2.0 m/s$)
+    \item $action5$ - Rotate pan joint clockwise
+    \item $action6$ - Rotate pan joint counterclockwise
+    \item $action7$ - Rotate tilt joint clockwise 
+    \item $action8$ - Rotate tilt joint counterclockwise
+\end{itemize}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=8.5cm]{figs/network_structure.eps}
+\caption{Figure of network structure}
+\label{structure}
+\end{center}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=6cm]{figs/input_term.eps}
+\caption{Angle and distance between UD and human}
+\label{input_term}
+\end{center}
+\end{figure}
+
+報酬はUDが情報投影に成功した場合に$r_{projection}$で報酬を与え，人や壁などの障害物に衝突した場合に$r_{collision}$で罰則を与えることで，現実世界においても安全に情報が投影できる行動の獲得を目指している．投影成功の条件は，UDの現在投影位置と目標投影位置間の距離($d_{ud}$)が$c_{d}$以下の誤差になり，UDが停止している状態($v_{linear}=0$)でのみ投影成功とみなす．これは，UDは動きながら投影を行うと，投影映像が小さく振動しぶれるため人に不快感を与える可能性があるためである．また，$min_{x_t}$はlidarで取得したセンサ値であり，障害物との衝突を判定している．
+
+\begin{equation}
+r(s_{t},a_{t})= \left \{
+\begin{array}{l}
+r_{projection}\,if\,d_{d}<c_{d}\,and\,v_{linear}=0 \\
+r_{collision}\,if\,min_{x_{t}} < c_{o} \\
+\end{array}
+\right.
+\end{equation}
 
 \chapter{実験}
 \section{シミュレーションを用いた実験}
-\section{実験方法}
-\section{実験結果}
-\section{考察}
+本モデルの有用性を示すため，動的シミュレータであるGazeboを用いて動作実験を行った．
+
+\subsection{実験目的と方法}
+\subsection{実験結果}
+\subsection{考察}
+
+
 \section{実機を用いた実験}
-\section{実験方法}
-\section{LidarとRGBカメラを用いた人物の位置・向き検出}
+\subsection{実験目的と方法}
+\subsection{LidarとRGBカメラを用いた人物の位置・向き検出}
 実機実験において，目標人物の検出を2D Lidarと魚眼カメラを用いて行った．魚顔カメラは180度のRGB情報が取得可能なELP社のELP-USB8MP02G-L180を採用した．本システムはRGB画像情報から目標人物の検出を行った後，検出した目標人物の矩形内にあるLidarの値を用いて，脚と顔の向きから目標人物の立ち位置と向きを推定する．本システムの2D Lidarによる脚検出には，ROS公式のpeopleスタック\footnote{https://github.com/wg-perception/people}の一部であるleg\_detectorノードを用いた．また，RGB画像による人物の検出には，深層学習をアルゴリズムに持ち様々な物体を検出可能なIntel OpenVinoパッケージ\footnote{https://github.com/intel/ros\_openvino\_toolkit}を利用した．
 
 \begin{figure}[t]
@@ -726,8 +769,8 @@ export GAZEBO_MASTER_URI=http://localhost:11340
 \end{center}
 \end{figure}
 
-\section{実験結果}
-\section{考察}
+\subsection{実験結果}
+\subsection{考察}
 
 \chapter{結言}
 最後に結論をまとめる．
