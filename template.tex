@@ -743,12 +743,41 @@ r_{collision}\,if\,min_{x_{t}} < c_{o} \\
 \section{シミュレーションを用いた実験}
 本モデルの有用性を示すため，動的シミュレータであるGazeboを用いて動作実験を行った．
 
-\subsection{実験目的と方法}
+\subsection{実験目的と環境}
+Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の壁に囲まれた部屋内でランダムに出現する直立状態の人への情報投影するための行動獲得を目指した．UDがプロジェクタから投影した情報を赤い丸で示している．1エピソードを150回の試行とし，3200回エピソードを学習させた．エピソード終了の条件は，部屋内に出現した人の前方2.5m先に情報を投影する，壁に衝突する，150ステップが経過の3つの場合である．それぞれの報酬の値は$r_{projection}$を150，$r_{collision}$を-150で設定し，それ以外の状態では-1の値を与えた．また，学習率を0.000025，割引率は0.99，またミニバッチサイズは64とし実験を行った．
+
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=8cm]{figs/gazebo_with_ud.eps}
+\caption{Environment of experience}
+\label{gazebo}
+\end{center}
+\end{figure}
+
 \subsection{実験結果}
+8000エピソードの学習結果をFig.\ref{fig:result_reward},\ref{fig:result_loss}に示す．Fig.\ref{fig:result_reward}の縦軸は100エピソード毎の合計報酬の平均値を示し，横軸はエピソード数を示している．図より，学習が進むにつれ100ステップ毎の平均報酬が増加し，情報投影の行動を獲得した．約1300エピソード前後までは，合計報酬が負の値になっていることが多く，壁に衝突したり，情報投影が成功しないまま150ステップが経過している状態が観測された．しかし，1500エピソード前後からは，合計報酬が50を上回る回数が増加し，3000エピソード付近では約100ステップ以内で情報投影が完了しているため，本モデルは情報投影の行動獲得を実現している．
+
+\begin{figure}[tbp]
+	\begin{center}
+	\subfigure[Results of reward]{\includegraphics[width=11cm]{figs/reward_multi_A4_env_max_200_output_test_0105_1.eps}
+	\label{fig:result_reward}}
+	%\hspace{5mm}
+	\subfigure[Results of loss]{\includegraphics[width=11cm]{figs/loss_multi_env_max_200_output_loss_test_0105_1.eps}
+	\label{fig:result_loss}}
+	\subfigure[Results of probability]{\includegraphics[width=11cm]{figs/result_multi_serviced_count_and_collitionenv_max_200_output_test_0105_1.eps}
+	\label{fig:result_probability}}
+	\end{center}
+	\caption{Graph of result}
+	\label{fig:result_graph}
+\end{figure}
+
 \subsection{考察}
 
 
 \section{実機を用いた実験}
+シミュレーション実験において学習が完了したモデルを用いて，実世界で動作が実現可能かを検証するため，UDの実機を用いた動作実験を行った．
+
 \subsection{実験目的と方法}
 \subsection{LidarとRGBカメラを用いた人物の位置・向き検出}
 実機実験において，目標人物の検出を2D Lidarと魚眼カメラを用いて行った．魚顔カメラは180度のRGB情報が取得可能なELP社のELP-USB8MP02G-L180を採用した．本システムはRGB画像情報から目標人物の検出を行った後，検出した目標人物の矩形内にあるLidarの値を用いて，脚と顔の向きから目標人物の立ち位置と向きを推定する．本システムの2D Lidarによる脚検出には，ROS公式のpeopleスタック\footnote{https://github.com/wg-perception/people}の一部であるleg\_detectorノードを用いた．また，RGB画像による人物の検出には，深層学習をアルゴリズムに持ち様々な物体を検出可能なIntel OpenVinoパッケージ\footnote{https://github.com/intel/ros\_openvino\_toolkit}を利用した．
