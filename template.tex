@@ -664,22 +664,22 @@ UDが人に快適かつ効果的に情報投影を行うためには，人の視
 
 
 \subsection{GAZEBOとROSを用いた分散アーキテクチャ}
-\ref{DQNの問題}節で述べた学習時間の短縮を可能にする仕組みとして，本研究ではGGAZEBOとROSを用いたエージェントの分散学習の導入を行う．複数のエージェントで学習を行う場合，各エージェントにつき各環境が必要になるため複数のシミュレーション環境を並列して同時に起動しなければならない．ROSはマスタ(master)というノード間の接続とメッセージ通信の実現に必要なサーバ（ネームサーバ）を持つ．しかし，1つのマスターにつき同名のノードを複数登録することはできない．よって，本研究では異なるROSマスタを設定し，独立したROSネットワークを複数構築する．ROSマスタとノード間の通信はXML-PRCを用いて行われ，環境変数の「\$ROS\_MASTER\_URI」と「\$GAZEBO\_MASTER\_URI」により通信ポートが決定される．そのため，任意のアドレスに変更するためには，ターミナルで以下のコマンドを実行する．
+\ref{DQNの問題}節で述べた学習時間の短縮する仕組みとして，本研究ではGAZEBOとROSを用いたエージェントの分散学習を導入した．複数のエージェントで学習を行う場合，各エージェントにつき環境が必要になるため複数のシミュレーション環境を並列して同時に起動しなければならない．ROSはマスタ(master)というノード間の接続とメッセージ通信の実現に必要なサーバ（ネームサーバ）を持つ．しかし，1つのマスターにつき同名のノードを複数登録することはできない．よって，本研究では異なるROSマスタを設定し，複数の独立したROSネットワークを構築する方法を採用した．ROSマスタとノード間の通信はXML-PRCを用いて行われ，環境変数の「\$ROS\_MASTER\_URI」と「\$GAZEBO\_MASTER\_URI」により通信ポートが決定される．そのため，任意のアドレスに変更するためには，ターミナルで以下のコマンドを実行する．
 
 \begin{lstlisting}
 export ROS_MASTER_URI=http://localhost:11350
 export GAZEBO_MASTER_URI=http://localhost:11340
 \end{lstlisting}
 
-\ref{fig:lefttop_dqn}は単一のエージェントで学習したときのアーキテクチャの図であり，\ref{fig:righttop_dqn}は，複数のエージェントを用いた提案するアーキテクチャの全体図である．各ROSネットワークのスレーブエージェントは各環境から遷移データを収集しマスタエージェントに送信する．そして，マスタエージェントがPrioritized Experience Replayを用いて遷移データのサンプリングを行った後，深層ニューラルネットワークで学習を行い，スレーブエージェントのネットワークの重みと同期する．
+\ref{fig:lefttop_dqn}は単一のエージェントで学習したときのアーキテクチャの図を示し，\ref{fig:righttop_dqn}は，分散学習を用いた提案するアーキテクチャの全体図である．エージェントは各スレッドにActorを持つ．Actorはは各環境から遷移データを収集し，学習する機能を持つLearnerに送信する．Learnerは収集した遷移データからPrioritized Experience Replayを用いてサンプリングして，学習を行う．そして，Actorがパラメータ更新の命令を出すとLearnerのネットワークのパラメータと同期する．
 
 \begin{figure}[tbp]
 
 	\begin{center}
-	\subfigure[single Agent]{\includegraphics[width=4cm]{figs/single_agent.eps}
+	\subfigure[single Agent]{\includegraphics[width=3.5cm]{figs/single_agent.eps}
 	\label{fig:lefttop_dqn}}
 	\hspace{10mm}
-	\subfigure[Multi agent]{\includegraphics[width=7cm]{figs/multi_agent.eps}
+	\subfigure[Multi agent]{\includegraphics[width=7.5cm]{figs/multi_agent.eps}
 	\label{fig:righttop_dqn}}
 	\end{center}
 	
@@ -726,7 +726,7 @@ UDが人へ情報を支援するための行動は，プロジェクタを任意
 \end{center}
 \end{figure}
 
-報酬設計はUDが情報投影に成功した場合に$r_{projection}$で報酬を与え，人や壁などの障害物に衝突した場合に$r_{collision}$で罰則を与える．現実世界においても安全に情報が投影できる行動の獲得を目指している．投影成功の条件は，UDの現在投影位置と目標投影位置間の距離($d_{ud}$)が$c_{d}$以下の誤差になり，\ref{投影支援条件}で述べた条件内にUDが停止している状態($v_{linear}=0$)で投影成功とみなす．これは，UDが動きながら情報投影を行うと，投影映像が小さく振動し人に不快感を与える可能性があるためである．また，$min_{x_t}$はlidarで取得したセンサ値であり，障害物との衝突を判定している．
+報酬設計はUDが情報投影に成功した場合に$r_{projection}$で報酬を与え，人や壁などの障害物に衝突した場合に$r_{collision}$で罰則を与える．現実世界においても安全に情報が投影できる行動の獲得を目指している．投影成功の条件は，UDの現在投影位置と目標投影位置間の距離($d_{ud}$)が$c_{d}$以下の誤差になり，\ref{投影支援条件}で述べた条件内にUDが停止している状態($v_{linear}=0$)で投影成功とみなす．これは，UDが動きながら情報投影を行うと，車輪の振動で投影映像が小さく振動し人に不快感を与える可能性があるためである．また，$min_{x_t}$はlidarで取得したセンサ値であり，障害物との衝突を判定している．
 
 \begin{equation}
 r(s_{t},a_{t})= \left \{
