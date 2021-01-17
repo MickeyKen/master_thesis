@@ -274,7 +274,7 @@ D-UDはこれらのコンセプトを引き継ぐと共に，異なる位置の�
 \section{ハードウェア構成}
 D-UDを構成するハードウェアの詳細について述べる．
 \subsection{コンピュータ}
-D-UDの総重量を軽減するために，Intel社のNext Unit of Computing (以後 NUC)を採用した．UD2.0で搭載されたコンピュータの重量が7.0[kg]であるのに対して，NUCは0.4[kg]であり，車輪にかかる負荷を軽減した．Fig.\ref{NUC}のNUCのの外観を，Table\ref{table:NUC}に仕様を示す．
+D-UDの総重量を軽減するために，Intel社のNext Unit of Computing (以後 NUC)を採用した．UDで搭載されたコンピュータの重量が7.0[kg]であるのに対して，NUCは0.4[kg]であり，車輪にかかる負荷を軽減した．Fig.\ref{NUC}のNUCのの外観を，Table\ref{table:NUC}に仕様を示す．
 
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
@@ -429,7 +429,7 @@ D-UDは上部のプレートに2台の雲台を搭載させるため，雲台同
 D-UDは異なる位置の人物に向けて情報支援を行う必要がある．そこで，広範囲の環境を認識するためパノラマカメラと測域センサを使用する．
 
 \subsubsection{カメラ}
-D-UDに360°パノラマ画像が取得なRICOH Theta Vを搭載した(Fig.\ref{ThetaV})．Theta Vは2枚の魚眼レンズで撮影した円形画像を，正距円筒図法により360°パノラマ画像に変換するカメラである．D-UDは，UD2.1よりも広範囲な環境認識が必要になるためTheta Vを採用している．Theta Vの仕様をTable\ref{table:ThetaV_TABLE}に示す．
+D-UDに360°パノラマ画像が取得なRICOH Theta Vを搭載した(Fig.\ref{ThetaV})．Theta Vは2枚の魚眼レンズで撮影した円形画像を，正距円筒図法により360°パノラマ画像に変換するカメラである．D-UDは，UDよりも広範囲な環境認識が必要になるためTheta Vを採用している．Theta Vの仕様をTable\ref{table:ThetaV_TABLE}に示す．
 
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
@@ -531,7 +531,7 @@ ROSとは，ロボットソフトウェアプラットフォームの一種で�
 
 \begin{table}[t]
 \begin{center}
-\caption{各ノード名および機能}
+\caption{Name and function of each node in the core package}
 \label{table:ros_node}
 \scalebox{0.9}[0.9]{
   \begin{tabular}{|c|p{8cm}|}\hline
@@ -782,18 +782,34 @@ Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の
 
 \subsection{考察}
 
+\newpage
 
 \section{実機を用いた実験}
 シミュレーション実験において学習が完了したモデルを用いて，実世界で動作が実現可能かを検証するため，UDの実機を用いた動作実験を行った．
 
 \subsection{実験目的と方法}
-\subsection{LidarとRGBカメラを用いた人物の位置・向き検出}
-実機実験において，目標人物の検出を2D 2D Lidar(以下: Lidar)と魚眼カメラを用いて行った．魚眼カメラは180度のRGB情報が取得可能なELP社のELP-USB8MP02G-L180を採用した．画像の解像度は1600×1200画素である．また，Lidarは北陽電機社のUTM-30LXであり,仕様をTable\ref{table:hokuyo}を示す.
+\subsection{2D LRFと魚眼カメラを用いた人物の位置・向き検出}
+実機実験において，目標人物の検出を2D LRF(Laser Range Finder)(以下: LRF)と魚眼カメラを用いて行った．魚眼カメラは180度のRGB情報が取得可能なELP社のELP-USB8MP02G-L180を採用した．画像の解像度は1600×1200画素である．また，LRFは北陽電機社のUTM-30LXであり,仕様をTable\ref{table:hokuyo}を示す.
 
-本システムはRGB画像情報から目標人物の検出を行った後，検出した目標人物の矩形内にあるLidarの値を用いて，脚と顔の向きから目標人物の立ち位置と向きを推定する．RGB画像による人物の検出には，深層学習をアルゴリズムに持ち様々な物体を検出可能なIntel OpenVinoパッケージ\footnote{https://github.com/intel/ros\_openvino\_toolkit}を利用した．また，2D Lidarによる脚検出には，ROS公式のpeopleスタック\footnote{https://github.com/wg-perception/people}の一部であるleg\_detectorノードを用いた．
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=7cm]{figs/ud_with_fisheyecamera.eps}
+\caption{Overview of fisheye camera}
+\label{ud_with_fisheyecamera}
+\end{center}
+\end{figure}
 
-本システムの処理の流れの概要図をFig.\ref{flow}に示す．Lidarは周囲270度にある障害物までの距離を計測可能であり，そのセンサ値から人物の脚検出と人物位置の推定が可能である．しかし，距離情報だけを用いると，机の脚など人の脚と似た特徴の物体を誤検出する恐れがある．そこで，画像情報による人物検出を導入した．まず，Lidarと魚顔カメラの設置位置が異なるため，キャリブレーションを行い両者のセンサ値をフュージョンする必要があった．内部パラメータが既知の魚眼カメラの二次元座標とLidarの三次元座標の組から，カメラの外部パラメータをPnP問題(Perspective n-Point Problem)を解き外部パラメータを求めた．そして，式\ref{transformation}より，Lidarのセンサ値を画像内の二次元座標に変換を行った．Fig.\ref{reprojection}にキャリブレーション結果を示す．
+本システムはRGB画像情報から目標人物の検出を行った後，検出した目標人物の矩形内にあるLRFのセンサ値を用いて，脚と顔の向きから目標人物の立ち位置と向きを推定する．RGB画像による人物の検出には，深層学習をアルゴリズムに持ち様々な物体を検出可能なIntel OpenVinoパッケージ\footnote{https://github.com/intel/ros\_openvino\_toolkit}を利用した．また，LRFによる脚検出には，ROS公式のpeopleスタック\footnote{https://github.com/wg-perception/people}の一部であるleg\_detectorノードを用いた．
 
+本システムの処理の流れの概要図をFig.\ref{flow}に示す．LRFは周囲270度にある障害物までの距離を計測可能であり，そのセンサ値から人物の脚検出と人物位置の推定が可能である．しかし，距離情報だけを用いると，机の脚など人の脚と似た特徴の物体を誤検出する恐れがある．そこで，画像情報による人物検出を導入した．まず，LRFと魚顔カメラの設置位置が異なるため，両者のセンサ値をフュージョンする必要があった．そこで，内部パラメータが既知の魚眼カメラの二次元座標とLRFで検出した三次元座標の組から，PnP問題(Perspective n-Point Problem)を解き魚眼カメラの外部パラメータを求めた．また，式\ref{transformation}は，カメラの内部パラメータと外部パラメータが既知であるとき，3次元座標を画像内の二次元座標に変換できることを示している．Fig.\ref{reprojection}はLRFで検出した3次元座標を画像に投影している様子である．
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=8cm]{figs/flow_detect_human.eps}
+\caption{System flow of Human pose stack}
+\label{flow}
+\end{center}
+\end{figure}
 
 \begin{eqnarray}
 s\left[
@@ -828,48 +844,40 @@ Z \\
 \right] \label{transformation}
 \end{eqnarray}
 
-\begin{eqnarray}
-\left[
-\begin{array}{c}
-x \\
-y \\
-z \\
-\end{array}
-\right]
-=R
-\left[
-\begin{array}{c}
-X \\
-Y \\
-Z \\
-\end{array}
-\right]
-+t
-\end{eqnarray}
-
-OpenVinoで人物検出を行った場合，人物を囲む矩形
-
-\begin{figure}[t]
-\begin{center}
-\includegraphics[clip, width=7cm]{figs/ud_with_fisheyecamera.eps}
-\caption{Overview of fisheye camera}
-\label{ud_with_fisheyecamera}
-\end{center}
-\end{figure}
-
-\begin{figure}[t]
-\begin{center}
-\includegraphics[clip, width=13cm]{figs/flow_detect_human.eps}
-\caption{System flow of Human pose stack}
-\label{flow}
-\end{center}
-\end{figure}
+%\begin{eqnarray}
+%\left[
+%\begin{array}{c}
+%x \\
+%y \\
+%z \\
+%\end{array}
+%\right]
+%=R
+%\left[
+%\begin{array}{c}
+%X \\
+%Y \\
+%Z \\
+%\end{array}
+%\right]
+%+t
+%\end{eqnarray}
 
 \begin{figure}[t]
 \begin{center}
 \includegraphics[clip, width=7cm]{figs/reprojection.eps}
-\caption{The result of fisheye camera and 2D Lidar}
+\caption{Projected 2D LRF points}
 \label{reprojection}
+\end{center}
+\end{figure}
+
+前述したように，本システムは画像から人物検出した後，検出範囲にあるLRFのセンサ値を用いて両脚の位置を推定する．しかし，OpenVINOによる物体検出の出力は，検出した物体の矩形の位置座標であるため，両脚部分だけでなく背景部分のセンサ値も含まれる．そこで，人物と背景のセンサ値を分離させるため，k-means法によるクラスタリング処理を行った．k-means法は非階層型のクラスタリング手法であり，ランダムに配置されたクラスタ中心の中から各個体は最も近い中心に割り当てられる．そして，クラスタごとに中心位置が収束するまで計算することでデータを分割する．本研究では，LRFと検出した人物の間に障害物が無いと仮定し，クラスタ数を2個に設定したk-means法を用いて，LRFから近い距離にあるクラスタを両脚部分と判定している(Fig.\ref{human_lidar_flow})．そして，ROS公式の機械学習で訓練された分類器(leg\_detector)を用いて，目標人物の脚のペアと人の中心位置を検出した．最後に，画像内の顔の有無を検出し，顔がカメラ側に向いているかを判別することで，目標人物の位置・向きを推定した．
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=13cm]{figs/human_lidar_flow.eps}
+\caption{System flow of Human pose stack}
+\label{human_lidar_flow}
 \end{center}
 \end{figure}
 
