@@ -752,7 +752,7 @@ r_{collision}\,if\,min_{x_{t}} < c_{o} \\
 本モデルの有用性を示すため，動的シミュレータであるGazeboを用いて動作実験を行った．
 
 \subsection{実験目的と環境}
-Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の壁に囲まれた部屋内でランダムに出現する直立状態の人への情報投影するための行動獲得を目指した．UDがプロジェクタから投影した情報を赤い丸で示している．1エピソードを150回の試行とし，3200回エピソードを学習させた．エピソード終了の条件は，部屋内に出現した人の前方2.5m先に情報を投影する，壁に衝突する，150ステップが経過するの3条件である．それぞれの報酬の値は$r_{projection}$を150，$r_{collision}$を-150で設定し，それ以外の状態では-1の値を与えた．また，学習率を0.000025，割引率は0.99，またミニバッチサイズは64とし実験を行った．実験に使用したコンピュータの構成をTable\ref{table:conmupter_experiment}に示す．
+Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の壁に囲まれた部屋内で，ランダムな位置に出現する直立状態の人へ情報投影するための行動獲得を目指した．また，UDがプロジェクタから投影した情報を赤い丸で示している．1エピソードを150回の試行とし，単一エージェントを用いたDQNと分散エージェントを用いたDQNでそれぞれ5000回エピソードを学習させた．エピソード終了の条件は，目標人物の前方2.5m先に情報を投影する，障害物に衝突する($c_{o}=800[mm]$)，150ステップが経過するの3条件である．そして，各報酬値は$r_{projection}$を150，$r_{collision}$を-200で設定し，それ以外の状態では-1の値を与えた．そして，150ステップを経過した場合，追加で-50の罰則を与える．実験に使用したコンピュータの構成をTable\ref{table:conmupter_experiment}に示す．また，学習時のパラメータの設定値をTable\ref{table:list_hyperpaeameters}に示す\footnote{https://github.com/MickeyKen/distributed\_dqn}．
 
 
 \begin{figure}[t]
@@ -764,7 +764,7 @@ Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の
 \end{figure}
 
 \begin{table}[t]
-	\caption{Specifications of computer}
+	\caption{Hardware information}
 	\label{table:conmupter_experiment}
 	\centering 
 	\begin{tabular}[tbp]{|c|c|}
