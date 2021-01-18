@@ -568,7 +568,7 @@ Robot Description)モデルの作成した(Fig.\ref{fig:left})．Fig.\ref{fig:ri
 	\hspace{5mm}
 	\subfigure[URDF model of Dual Ubiquitous Display in Rviz]{\includegraphics[height=4cm]{figs/dud_urdf.eps}
 	\label{fig:right}}
-	\subfigure[Dual Ubiquitous Display 3D model in the GAZEBO environment. Blue area indicates the range of LIDAR scanning.]{\includegraphics[width=9.6cm]{figs/dud_gazebo_environment2.eps}
+	\subfigure[Dual Ubiquitous Display 3D model in the GAZEBO environment. Blue area indicates the range of LIDAR scanning.]{\includegraphics[width=9.8cm]{figs/dud_gazebo_environment2.eps}
 	\label{fig:bottom}}
 	\end{center}
 	\caption{Robot Modeling in GAZEBO/ROS}
@@ -757,7 +757,7 @@ Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の
 
 \begin{figure}[t]
 \begin{center}
-\includegraphics[clip, width=8cm]{figs/gazebo_with_ud.eps}
+\includegraphics[clip, width=12cm]{figs/experiment_environment.eps}
 \caption{Environment of experience}
 \label{gazebo}
 \end{center}
@@ -773,6 +773,23 @@ Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の
 		CPU & Intel Core i7-6700K (4.00GHz$\times$8) \\\hline
 		Memory & 16GB \\\hline
 		GPU & GeForce GTX TITAN X (12GB) \\\hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[t]
+	\caption{List of hyperparameters}
+	\label{table:list_hyperpaeameters}
+	\centering 
+	\begin{tabular}[tbp]{ll}
+		\hline 
+		minibatch size & 512 \\
+		replay memory size & 200000 \\
+		steps & 150 \\
+		discount factor & 0.99 \\
+		multi-step size & 3 \\
+		target update interval & 2500 \\
+		optimizer & RMSProp
+		
 	\end{tabular}
 \end{table}
 
