@@ -274,7 +274,7 @@ D-UDはこれらのコンセプトを引き継ぐと共に，異なる位置の�
 \section{ハードウェア構成}
 D-UDを構成するハードウェアの詳細について述べる．
 \subsection{コンピュータ}
-D-UDの総重量を軽減するために，Intel社のNext Unit of Computing (以後 NUC)を採用した．UDで搭載されたコンピュータの重量が7.0[kg]であるのに対して，NUCは0.4[kg]であり，車輪にかかる負荷を軽減した．Fig.\ref{NUC}のNUCのの外観を，Table\ref{table:NUC}に仕様を示す．
+D-UDの総重量を軽減するために，Intel社のNext Unit of Computing (以後 NUC)を採用した．UDで搭載されたコンピュータの重量が7.0[kg]であるのに対して，NUCは0.4[kg]であり，車輪にかかる負荷を軽減した．Fig.\ref{NUC}のNUCのの外観を，Table \ref{table:NUC}に仕様を示す．
 
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
@@ -343,7 +343,7 @@ D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-
 \end{figure}
 
 \subsubsection{プロジェクタ}
-プロジェクタはLG HF80LSを採用した．Fig.\ref{LG}にLG HF80LSの外観を，Table\ref{table:LG}に仕様を示す．D-UDはプロジェクタを2個搭載する必要があるため，消費電力量の少ないプロジェクタが望ましい．LG HF80LSは，UDで搭載されたプロジェクタ(NEC NP64J)の消費電力が292[w]に対して，140[w]であり約半分の消費電力である．
+プロジェクタはLG HF80LSを採用した．Fig.\ref{LG}にLG HF80LSの外観を，Table \ref{table:LG}に仕様を示す．D-UDはプロジェクタを2個搭載する必要があるため，消費電力量の少ないプロジェクタが望ましい．LG HF80LSは，UDで搭載されたプロジェクタ(NEC NP64J)の消費電力が292[w]に対して，140[w]であり約半分の消費電力である．
 
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
@@ -374,7 +374,7 @@ D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-
 \end{figure}
 
 \subsubsection{パン・チルトモータ}
-D-UDではモータとして，Robotis社のDynamixel MX-64ATを使用している．角度制御分解能が高く，円滑な投影画像の移動やぶれの改善が期待できる．MX-64ATの外観をFig.\ref{Dynamixel}に，仕様をTable\ref{table:Dynamixel}に示す．
+D-UDではモータとして，Robotis社のDynamixel MX-64ATを使用している．角度制御分解能が高く，円滑な投影画像の移動やぶれの改善が期待できる．MX-64ATの外観をFig.\ref{Dynamixel}に，仕様をTable \ref{table:Dynamixel}に示す．
 
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
@@ -429,7 +429,7 @@ D-UDは上部のプレートに2台の雲台を搭載させるため，雲台同
 D-UDは異なる位置の人物に向けて情報支援を行う必要がある．そこで，広範囲の環境を認識するためパノラマカメラと測域センサを使用する．
 
 \subsubsection{カメラ}
-D-UDに360°パノラマ画像が取得なRICOH Theta Vを搭載した(Fig.\ref{ThetaV})．Theta Vは2枚の魚眼レンズで撮影した円形画像を，正距円筒図法により360°パノラマ画像に変換するカメラである．D-UDは，UDよりも広範囲な環境認識が必要になるためTheta Vを採用している．Theta Vの仕様をTable\ref{table:ThetaV_TABLE}に示す．
+D-UDに360°パノラマ画像が取得なRICOH Theta Vを搭載した(Fig.\ref{ThetaV})．Theta Vは2枚の魚眼レンズで撮影した円形画像を，正距円筒図法により360°パノラマ画像に変換するカメラである．D-UDは，UDよりも広範囲な環境認識が必要になるためTheta Vを採用している．Theta Vの仕様をTable \ref{table:ThetaV_TABLE}に示す．
 
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
@@ -752,7 +752,7 @@ r_{collision}\,if\,min_{x_{t}} < c_{o} \\
 本モデルの有用性を示すため，動的シミュレータであるGazeboを用いて動作実験を行った．
 
 \subsection{実験目的と環境}
-Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の壁に囲まれた部屋内で，ランダムな位置に出現する直立状態の人へ情報投影するための行動獲得を目指した．また，UDがプロジェクタから投影した情報を赤い丸で示している．1エピソードを150回の試行とし，単一エージェントを用いたDQNと分散エージェントを用いたDQNでそれぞれ5000回エピソードを学習させた．エピソード終了の条件は，目標人物の前方2.5m先に情報を投影する，障害物に衝突する($c_{o}=800[mm]$)，150ステップが経過するの3条件である．そして，各報酬値は$r_{projection}$を150，$r_{collision}$を-200で設定し，それ他の状態では-1の報酬を与えた．さらに，投影成功や衝突などのイベントがなく150ステップを経過した場合は，追加で-50の罰則を設定した．実験に使用したコンピュータの構成をTable\ref{table:conmupter_experiment}に示す．また，学習時のパラメータの設定値をTable\ref{table:list_hyperpaeameters}に示す\footnote{https://github.com/MickeyKen/distributed\_dqn}．
+Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の壁に囲まれた部屋内で，ランダムな位置に出現する直立状態の人へ情報投影するための行動獲得を目指した．また，UDがプロジェクタから投影した情報を赤い丸で示している．1エピソードを150回の試行とし，単一エージェントを用いたDQNと分散エージェントを用いたDQNでそれぞれ5000回エピソードを学習させた．エピソード終了の条件は，目標人物の前方2.5m先に情報を投影する，障害物に衝突する($c_{o}=800[mm]$)，150ステップが経過するの3条件である．そして，各報酬値は$r_{projection}$を150，$r_{collision}$を-200で設定し，それ他の状態では-1の報酬を与えた．さらに，投影成功や衝突などのイベントがなく150ステップを経過した場合は，追加で-50の罰則を設定した．実験に使用したコンピュータの構成をTable \ref{table:conmupter_experiment}に示す．また，学習時のパラメータの設定値をTable \ref{table:list_hyperpaeameters}に示す\footnote{https://github.com/MickeyKen/distributed\_dqn}．
 
 
 \begin{figure}[t]
@@ -794,22 +794,63 @@ Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の
 \end{table}
 
 \subsection{実験結果}
-5000エピソードの学習結果をFig.\ref{fig:result_graph}に示す．Fig.\ref{fig:result_reward}は，縦軸は100エピソード毎の合計報酬の平均値を示し，横軸はエピソード数を示している．エージェントの数に関わらず学習が進むにつれ合計平均報酬が増加し行動の最適化ができた(Fig.\ref{fig:result_loss})．また，合計平均報酬が100を超えるまでに，DQNで学習した場合は26時間かかり，分散エージェントを用いたDQNで学習した場合は8時間かかった．これは，エージェントの数の問題だけでなく，$\epsilon$の設定やPrioritized Experience Replayによる学習の効率化ができたと考えられる．Fig.\ref{fig:result_reward}より，約800エピソード前後までは，合計報酬が負の値になっていることが多く，壁に衝突したり，情報投影が成功しないまま150ステップが経過している状態が観測された(Fig.\ref{fig:result_probability})．しかし，800エピソード前後からは，合計報酬が50を上回り，1000エピソード付近では約100ステップ以内で情報投影が完了している．また，[Q-valueのグラフ]は，行動価値であるQ値の最大値を表すグラフである．Q値は学習が進むにつれ増加しているため，本モデルは情報投影の行動獲得
-を実現している．
+5000エピソードの学習結果をFig.\ref{result_reward}に示す．Fig.\ref{result_reward}は，縦軸は100エピソード毎の合計報酬の平均値を示し，横軸はエピソード数を示している．エージェントの数に関わらず学習が進むにつれ合計平均報酬が増加し行動の最適化ができた(Fig.\ref{result_loss})．また，合計平均報酬が100を超えるまでに，DQNで学習した場合は26時間かかり，分散エージェントを用いたDQNで学習した場合は8時間かかった．これは，エージェントの数の問題だけでなく，$\epsilon$の設定やPrioritized Experience Replayによる学習の効率化ができたと考えられる．Fig.\ref{result_reward}より，約800エピソード前後までは，合計報酬が負の値になっていることが多く，壁に衝突したり，情報投影が成功しないまま150ステップが経過している状態が観測された(Fig.\ref{result_probability})．しかし，800エピソード前後からは，合計報酬が50を上回り，1000エピソード付近では約100ステップ以内で情報投影が完了している．また，Fig.\ref{result_q_value}は行動価値であるQ値の最大値を示している．Q値は学習が進むにつれ最大値が増加しており，正な報酬(投影成功)に向けた行動が選択出来ていることを表している．よって本モデルは情報投影の行動獲得を実現している(Fig.\ref{experiment_motion})．
 
-\begin{figure}[tbp]
-	\begin{center}
-	\subfigure[Results of reward]{\includegraphics[width=11cm]{figs/reward_multi_A4_env_max_200_output_test_0105_1.eps}
-	\label{fig:result_reward}}
-	%\hspace{5mm}
-	\subfigure[Results of loss]{\includegraphics[width=11cm]{figs/loss_multi_env_max_200_output_loss_test_0105_1.eps}
-	\label{fig:result_loss}}
-	\subfigure[Results of probability]{\includegraphics[width=11cm]{figs/result_multi_serviced_count_and_collitionenv_max_200_output_test_0105_1.eps}
-	\label{fig:result_probability}}
-	\end{center}
-	\caption{Graph of result}
-	\label{fig:result_graph}
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=11cm]{figs/result_multi_reward.eps}
+\caption{Result of average reward over the 100 last episodes}
+\label{result_reward}
+\end{center}
 \end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=11cm]{figs/result_multi_loss.eps}
+\caption{Result of losses}
+\label{result_loss}
+\end{center}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=11cm]{figs/result_multi_probability.eps}
+\caption{Result of event probability}
+\label{result_probability}
+\end{center}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=11cm]{figs/result_multi_q_value.eps}
+\caption{Result of MAX Q-value}
+\label{result_q_value}
+\end{center}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=13cm, angle=0]{figs/experiment_motion.eps}
+\caption{Result of UD motion}
+\label{experiment_motion}
+\end{center}
+\end{figure}
+
+% \begin{figure}[tbp]
+% 	\begin{center}
+% 	\subfigure[Results of reward]{\includegraphics[width=11cm]{figs/result_multi_reward.eps}
+% 	\label{fig:result_reward}}
+% 	%\hspace{5mm}
+% 	\subfigure[Results of loss]{\includegraphics[width=11cm]{figs/result_multi_loss.eps}
+% 	\label{fig:result_loss}}
+% 	\subfigure[Results of MAX Q-value]{\includegraphics[width=11cm]{figs/result_multi_q_value.eps}
+% 	\label{fig:result_q_value}}
+% 	\end{center}
+% 	\subfigure[Results of event probability]{\includegraphics[width=11cm]{figs/result_multi_probability.eps}
+% 	\label{fig:result_probability}}
+% 	\caption{Graph of result}
+% 	\label{fig:result_graph}
+% \end{figure}
 
 \subsection{考察}
 
