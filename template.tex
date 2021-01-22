@@ -459,7 +459,7 @@ D-UDに360°パノラマ画像が取得なRICOH Theta Vを搭載した(Fig.\ref{
 \end{figure}
 
 \subsubsection{Laser Range Finder}
-D-UDに北陽電機のLaser Range Finder(以後 LRF)であるUTM-30LXを2台搭載している(Fig.\ref{hokuyo})．Fig.\ref{DUD}で示したように，D-UDの前後にLRFを取り付けることで，全方位をセンシングすることができる．このLRFは，D-UDの自己位置推定や障害物等との衝突回避に用いられる．Table\ref{table:hokuyo}にLRFの仕様を示す.
+D-UDに北陽電機のLaser Range Finder(以後 LRF)であるUTM-30LXを2台搭載している(Fig.\ref{hokuyo})．Fig.\ref{DUD}で示したように，D-UDの前後にLRFを取り付けることで，全方位をセンシングすることができる．このLRFは，D-UDの自己位置推定や障害物等との衝突回避に用いられる．Table \ref{table:hokuyo}にLRFの仕様を示す.
 
 \begin{figure}
 \begin{minipage}{0.4\textwidth}
@@ -517,7 +517,7 @@ D-UDに北陽電機のLaser Range Finder(以後 LRF)であるUTM-30LXを2台搭�
 D-UDの制御には，移動プラットフォームの制御，複数のセンサを使った周囲の環境情報の認識，パン・チルト機構プロジェクタの制御など複数の制御を並列的に処理する必要がある．そこで，本研究ではD-UDの開発において並列処理とコードの再利用性など，ロボット効率的な開発を可能にするミドルウェアのWillow Garage社のROS(Robot Operating System)\cite{ROS}を利用する．
 
 \subsection{ROSミドルウェア}
-ROSとは，ロボットソフトウェアプラットフォームの一種である．ROSはノードとよばれるプロセス間で，トピックを介してメッセージを交換することができる．開発者は各プロセスに必要なメッセージの受け渡しを実行することで，容易に各機能の並列処理を行うことができる．D-UDのソフトウェア制御では，各ノードがパブリッシュ・サブスクライブしデータを送受信することで，すべてのプログラムの並列処理を可能にしている．D-UDに実装したコアとなるノード群をFig.\ref{rqt}に示し，各ノードの機能説明をTable\ref{table:ros_node}に示す\footnote{https://github.com/MickeyKen/dual\_ubiquitous\_display\_core}．コアノード群は，アクチュエータやセンサの起動からキーボードやjoystickを用いたD-UDのマニュアル操作までD-UDの基本的な機能を提供する．また，D-UD全体の座標管理やLidarの距離情報を用いたナビゲーション，プロジェクタの投影面の歪み計算も実装されている．そのため，開発者は各ノードに必要なデータの通信を考慮するだけで，容易にD-UDのシステムの拡張を行うことができる．
+ROSとは，ロボットソフトウェアプラットフォームの一種である．ROSはノードとよばれるプロセス間で，トピックを介してメッセージを交換することができる．開発者は各プロセスに必要なメッセージの受け渡しを実行することで，容易に各機能の並列処理を行うことができる．D-UDのソフトウェア制御では，各ノードがパブリッシュ・サブスクライブしデータを送受信することで，すべてのプログラムの並列処理を可能にしている．D-UDに実装したコアとなるノード群をFig.\ref{rqt}に示し，各ノードの機能説明をTable \ref{table:ros_node}に示す\footnote{https://github.com/MickeyKen/dual\_ubiquitous\_display\_core}．コアノード群は，アクチュエータやセンサの起動からキーボードやjoystickを用いたD-UDのマニュアル操作までD-UDの基本的な機能を提供する．また，D-UD全体の座標管理やLidarの距離情報を用いたナビゲーション，プロジェクタの投影面の歪み計算も実装されている．そのため，開発者は各ノードに必要なデータの通信を考慮するだけで，容易にD-UDのシステムの拡張を行うことができる．
 
 %\ref{chap:control}節にD-UDのコアとなる制御パッケージについて述べる．また，\ref{chap:recognition}節でカメラやLidarを用いた環境認識プログラムの構成について述べる．
 
@@ -795,7 +795,7 @@ Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の
 \end{table}
 
 \subsection{実験結果}
-5000エピソードの学習結果をFig.\ref{result_reward}に示す．Fig.\ref{result_reward}は，縦軸は100エピソード毎の合計報酬の平均値を示し，横軸はエピソード数を示している．エージェントの数に関わらず学習が進むにつれ合計平均報酬が増加し行動の最適化ができた(Fig.\ref{result_loss})．また，合計平均報酬が100を超えるまでに，DQNで学習した場合は26時間かかり，分散エージェントを用いたDQNで学習した場合は8時間かかった．これは，エージェントの数の問題だけでなく，$\epsilon$の設定やPrioritized Experience Replayによる学習の効率化ができたと考えられる．Fig.\ref{result_reward}より，約800エピソード前後までは，合計報酬が負の値になっていることが多く，壁に衝突したり，情報投影が成功しないまま150ステップが経過している状態が観測された(Fig.\ref{result_probability})．しかし，800エピソード前後からは，合計報酬が50を上回り，1000エピソード付近では約100ステップ以内で情報投影が完了している．また，Fig.\ref{result_q_value}は行動価値であるQ値の最大値を示している．Q値は学習が進むにつれ最大値が増加しており，正の報酬(投影成功)に向けた行動が選択出来ていることを表している．よって本モデルは情報投影の行動獲得を実現している．Fig.\ref{experiment_motion}は学習後のモデルを用いてUDが人へ情報支援をしている様子である．左図は8つの行動のQ値を表しており，UDはQ値の最も高い行動を選択し実行し続けることで，\ref{投影支援条件}節で述べた範囲内の立ち位置から目標人物の2.5m先方へ情報投影ができている．
+5000エピソードの学習結果をFig.\ref{result_reward}に示す．Fig.\ref{result_reward}は，縦軸は100エピソード毎の合計報酬の平均値を示し，横軸はエピソード数を示している．エージェントの数に関わらず学習が進むにつれ合計平均報酬が増加し行動の最適化ができた(Fig.\ref{result_loss})．また，合計平均報酬が100を超えるまでに，DQNで学習した場合は26時間かかり，分散エージェントを用いたDQNで学習した場合は8時間かかった．これは，エージェントの数の問題だけでなく，$\epsilon$の設定やPrioritized Experience Replayによる学習の効率化ができたと考えられる．Fig.\ref{result_reward}より，約800エピソード前後までは合計報酬が負の値になっていることが多く，壁に衝突したり，情報投影が成功しないまま150ステップが経過している状態が観測された．しかし，800エピソード前後からは，合計報酬が50を上回り，1000エピソード付近では約100ステップ以内で情報投影が完了している．また，Fig.\ref{result_probability}は100エピソード毎に発生したイベントの確率を示してる．さらに，Fig.\ref{result_q_value}は行動価値であるQ値の最大値を示している．Q値の最大値は学習が進むにつれ増加しているため，正の報酬(投影成功)に向けた行動が選択出来ていることを表している．したがって，本モデルは情報投影の行動獲得を実現している．Fig.\ref{sim_experiment_motion}は学習後のモデルを用いてUDが人へ情報支援をしている様子である．左図は8つの行動のQ値を表しており，UDはQ値の最も高い行動を選択し実行し続けることで，\ref{投影支援条件}項で述べた範囲内の立ち位置から目標人物の2.5m先方へ情報投影ができている．
 
 \begin{figure}[t]
 \begin{center}
@@ -829,13 +829,13 @@ Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の
 \end{center}
 \end{figure}
 
-\begin{figure}[t]
-\begin{center}
-\includegraphics[clip, width=13cm, angle=0]{figs/experiment_motion.eps}
-\caption{Result of UD motion}
-\label{experiment_motion}
-\end{center}
-\end{figure}
+% \begin{figure}[t]
+% \begin{center}
+% \includegraphics[clip, width=13cm, angle=0]{figs/experiment_motion.eps}
+% \caption{Result of UD motion}
+% \label{experiment_motion}
+% \end{center}
+% \end{figure}
 
 % \begin{figure}[tbp]
 % 	\begin{center}
@@ -854,14 +854,24 @@ Fig.\ref{gazebo}に実験のフィールドを示す．$6400[mm]$×$8500[mm]$の
 % \end{figure}
 
 \subsection{考察}
-実験では，人の位置や投影位置情報などからUDが情報投影するための行動を獲得することができた．そして，エピソードの最初のステップで車輪の速度に関する行動を選択し，移動している間にパン・チルト関節に関する行動を出力していることが分かった．これは，1ステップ毎に-1という負の報酬が与えられるため，出来る限り最短のステップでエピソードを終了させるためであると考えられる．また，UDの立ち位置についても学習できたとこを示している．
+シミュレーションによる動作実験では，人の位置や投影位置情報などからUDが情報投影するための行動を獲得することができた．Fig.\ref{sim_experiment_motion}より，獲得した行動はエピソードの最初のステップで車輪の速度に関する行動を選択し，移動している間にパン・チルト関節に関する行動を出力していることが分かった．これは，1ステップが経過する毎に負の報酬($r_{other}=-1$)が与えられるため，出来る限り最短のステップでエピソードを終了させるためであると考えられる．
 
-\newpage
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=13cm]{figs/sim_experiment_morion.eps}
+\caption{Result simulation UD motion}
+\label{sim_experiment_motion}
+\end{center}
+\end{figure}
+
+\clearpage
 
 \section{実機を用いた実験}
 シミュレーション実験において学習が完了したモデルを用いて，実世界で動作が実現可能かを検証するため，UDの実機を用いた動作実験を行った．
 
-\subsection{実験目的と方法}
+\subsection{実験環境と方法}
+前節で述べたシミュレーション実験で獲得した行動を
+
 \subsection{2D LRFと魚眼カメラを用いた人物の位置・向き検出}
 実機実験において，目標人物の検出を2D LRF(Laser Range Finder)(以下: LRF)と魚眼カメラを用いて行った．魚眼カメラは180度のRGB情報が取得可能なELP社のELP-USB8MP02G-L180を採用した．画像の解像度は1600×1200画素である．また，LRFは北陽電機社のUTM-30LXであり,仕様をTable\ref{table:hokuyo}を示す.
 
@@ -956,6 +966,15 @@ Z \\
 \end{figure}
 
 \subsection{実験結果}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[clip, width=13cm]{figs/real_experiment_motion.eps}
+\caption{Experimental result}
+\label{real_experiment_motion}
+\end{center}
+\end{figure}
+
 \subsection{考察}
 
 \chapter{結言}
