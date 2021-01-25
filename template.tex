@@ -272,24 +272,14 @@ D-UDはこれらのコンセプトを引き継ぐと共に，異なる位置の�
 
 
 \section{ハードウェア構成}
-D-UDを構成するハードウェアの詳細について述べる．
+本節では，D-UDを構成するハードウェアの詳細について述べる．
 \subsection{コンピュータ}
-D-UDの総重量を軽減するために，Intel社のNext Unit of Computing (以後 NUC)を採用した．UDで搭載されたコンピュータの重量が7.0[kg]であるのに対して，NUCは0.4[kg]であり，車輪にかかる負荷を軽減した．Fig.\ref{NUC}のNUCのの外観を，Table \ref{table:NUC}に仕様を示す．
+D-UDの総重量を軽減するために，Intel社のNext Unit of Computing (以後 NUC)を採用した．UDで搭載されたコンピュータの重量が7.0[kg]であるのに対して，NUCは0.4[kg]であり，車輪にかかる負荷を軽減した．Table \ref{table:NUC}にNUCの仕様を示す．
 
-\begin{figure}
-\begin{minipage}{0.4\textwidth}
-\begin{center}
-\includegraphics[scale=0.45]{figs/intel-nuc.eps}
-\caption{Intel NUC}
-\label{NUC}
-\end{center}
-\end{minipage}
-\begin{minipage}{0.5\textwidth}
-\begin{center}
-\makeatletter
-\def\@captype{table}
-\makeatother
-\caption{Specifications of Intel NUC}
+\begin{table}[h]
+	\caption{Specifications of Intel NUC}
+	\label{table:NUC}
+	\centering 
 	\begin{tabular}[tbp]{|c|c|}
 		\hline 
 		External size(WDH) & 115×111×48[mm] \\\hline
@@ -297,23 +287,46 @@ D-UDの総重量を軽減するために，Intel社のNext Unit of Computing (�
 		CPU & Core i5-5250U 1.6[GHz] \\\hline
 		Memory & DDR3L 8[GB] \\\hline
 	\end{tabular}
-\label{table:NUC}
-\end{center}
-\end{minipage}
-\end{figure}
+\end{table}
 
-D-UDはメインPCであるNUCと，youBotの内部搭載されたPCと通信しながら，１つのシステムとして動作する．この通信は，車輪の姿勢やオドメトリなどのデータの送受信を頻繁に行うため，LANケーブルを用いた有線接続が必要である．一方，外部からD-UDの操作を行う場合，無線接続したPCから操作することが望ましい．そこで，D-UDのメインPC(NUC)にトラベルルータを接続することで，環境に設置されたWifiに依存することなく，D-UDを無線接続したPCから操作を可能にした(Fig.\ref{computer_connection})．
+% \begin{figure}
+% \begin{minipage}{0.4\textwidth}
+% \begin{center}
+% \includegraphics[scale=0.45]{figs/intel-nuc.eps}
+% \caption{Intel NUC}
+% \label{NUC}
+% \end{center}
+% \end{minipage}
+% \begin{minipage}{0.5\textwidth}
+% \begin{center}
+% \makeatletter
+% \def\@captype{table}
+% \makeatother
+% \caption{Specifications of Intel NUC}
+% 	\begin{tabular}[tbp]{|c|c|}
+% 		\hline 
+% 		External size(WDH) & 115×111×48[mm] \\\hline
+% 		Weight & 0.408[kg] \\\hline
+% 		CPU & Core i5-5250U 1.6[GHz] \\\hline
+% 		Memory & DDR3L 8[GB] \\\hline
+% 	\end{tabular}
+% \label{table:NUC}
+% \end{center}
+% \end{minipage}
+% \end{figure}
+
+D-UDはメインコンピュータであるNUCと，youBotの内部搭載されたコンピュータが通信するとこで１つのシステムとして動作する．この通信は，車輪の姿勢やオドメトリなどのデータの送受信を頻繁に行うため，LANケーブルを用いた有線接続が必要である．一方，外部からD-UDの操作を行う場合，無線接続したコンピュータから操作することが望ましい．そこで，D-UDのメインコンピュータ(NUC)にトラベルルータを接続することで，環境に設置されたWifiに依存することなく，D-UDを無線操作することを可能にした(Fig.\ref{computer_connection})．
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[clip, width=12cm]{figs/configuration.eps}
+\includegraphics[clip, width=12cm]{figs/computer_cinfiguration.eps}
 \caption{Computer connection diagram}
 \label{computer_connection}
 \end{center}
 \end{figure}
 
 \subsection{プロジェクタプラットフォーム}
-D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-PT)機構を採用している(Fig.\ref{pantilt})\cite{pantilt}．プロジェクタで投影した映像の線形的な移動をPan-Tilt機構で実現する．また，パン関節の可動域は125°であり，チルト関節の可動域は280°である．
+D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-PT)機構を採用している(Fig.\ref{pantilt})\cite{pantilt}．プロジェクタで投影した映像の線形的な移動をPan-Tilt機構で実現する．パン関節の可動域は125°であり，チルト関節の可動域は280°である．
 
 \begin{figure}[h]
 \begin{center}
@@ -345,20 +358,46 @@ D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-
 \subsubsection{プロジェクタ}
 プロジェクタはLG HF80LSを採用した．Fig.\ref{LG}にLG HF80LSの外観を，Table \ref{table:LG}に仕様を示す．D-UDはプロジェクタを2個搭載する必要があるため，消費電力量の少ないプロジェクタが望ましい．LG HF80LSは，UDで搭載されたプロジェクタ(NEC NP64J)の消費電力が292[w]に対して，140[w]であり約半分の消費電力である．
 
-\begin{figure}
-\begin{minipage}{0.4\textwidth}
+% \begin{figure}
+% \begin{minipage}{0.4\textwidth}
+% \begin{center}
+% \includegraphics[scale=0.5]{figs/lg_projector.eps}
+% \caption{LG HF80LS}
+% \label{LG}
+% \end{center}
+% \end{minipage}
+% \begin{minipage}{0.5\textwidth}
+% \begin{center}
+% \makeatletter
+% \def\@captype{table}
+% \makeatother
+% \caption{Specifications of LG HF80LS}
+% 	\begin{tabular}[tbp]{|c|c|}
+% 		\hline 
+% 		External size(WDH) & 108×252×144[mm] \\\hline
+% 		Weight & 2.1[kg] \\\hline
+% 		Resolution & 1920×1080 \\\hline
+% 		Brightness & 2000[lm] \\\hline
+% 		Light source & DLP \\\hline
+% 		Power consumption & 140[w] \\\hline
+% 	\end{tabular}
+% \label{table:LG}
+% \end{center}
+% \end{minipage}
+% \end{figure}
+
+\begin{figure}[h]
 \begin{center}
-\includegraphics[scale=0.5]{figs/lg_projector.eps}
+\includegraphics[clip, width=8cm]{figs/lg_projector.eps}
 \caption{LG HF80LS}
 \label{LG}
 \end{center}
-\end{minipage}
-\begin{minipage}{0.5\textwidth}
-\begin{center}
-\makeatletter
-\def\@captype{table}
-\makeatother
-\caption{Specifications of LG HF80LS}
+\end{figure}
+
+\begin{table}[h]
+	\caption{Specifications of LG HF80LS}
+	\label{table:LG}
+	\centering 
 	\begin{tabular}[tbp]{|c|c|}
 		\hline 
 		External size(WDH) & 108×252×144[mm] \\\hline
@@ -368,28 +407,50 @@ D-UDのプロジェクタプラットフォームにはFixed-Center Pan-Tilt(FC-
 		Light source & DLP \\\hline
 		Power consumption & 140[w] \\\hline
 	\end{tabular}
-\label{table:LG}
-\end{center}
-\end{minipage}
-\end{figure}
+\end{table}
 
 \subsubsection{パン・チルトモータ}
 D-UDではモータとして，Robotis社のDynamixel MX-64ATを使用している．角度制御分解能が高く，円滑な投影画像の移動やぶれの改善が期待できる．MX-64ATの外観をFig.\ref{Dynamixel}に，仕様をTable \ref{table:Dynamixel}に示す．
 
-\begin{figure}
-\begin{minipage}{0.4\textwidth}
+% \begin{figure}
+% \begin{minipage}{0.4\textwidth}
+% \begin{center}
+% \includegraphics[scale=0.4]{figs/MX_64AT.eps}
+% \caption{Dynamixel MX-64AT}
+% \label{Dynamixel}
+% \end{center}
+% \end{minipage}
+% \begin{minipage}{0.5\textwidth}
+% \begin{center}
+% \makeatletter
+% \def\@captype{table}
+% \makeatother
+% \caption{Specifications of Dynamixel MX-64AT}
+% 	\begin{tabular}[tbp]{|c|c|}
+% 		\hline 
+% 		Dimensions (WHD) & 40.2x61.1x41[mm] \\\hline
+% 		Weight & 165[g] \\\hline
+% 		Resolution & 4096[pulse/rev] \\\hline
+% 		Stall Torque & 6.0[Nm] \\\hline
+% 		No Load Speed & 63[rev/min] \\\hline
+% 	\end{tabular}
+% \label{table:Dynamixel}
+% \end{center}
+% \end{minipage}
+% \end{figure}
+
+\begin{figure}[h]
 \begin{center}
-\includegraphics[scale=0.4]{figs/MX_64AT.eps}
+\includegraphics[clip, width=3cm]{figs/MX_64AT.eps}
 \caption{Dynamixel MX-64AT}
 \label{Dynamixel}
 \end{center}
-\end{minipage}
-\begin{minipage}{0.5\textwidth}
-\begin{center}
-\makeatletter
-\def\@captype{table}
-\makeatother
-\caption{Specifications of Dynamixel MX-64AT}
+\end{figure}
+
+\begin{table}[h]
+	\caption{Specifications of Dynamixel MX-64AT}
+	\label{table:Dynamixel}
+	\centering 
 	\begin{tabular}[tbp]{|c|c|}
 		\hline 
 		Dimensions (WHD) & 40.2x61.1x41[mm] \\\hline
@@ -398,10 +459,7 @@ D-UDではモータとして，Robotis社のDynamixel MX-64ATを使用してい�
 		Stall Torque & 6.0[Nm] \\\hline
 		No Load Speed & 63[rev/min] \\\hline
 	\end{tabular}
-\label{table:Dynamixel}
-\end{center}
-\end{minipage}
-\end{figure}
+\end{table}
 
 \subsubsection{プレート}
 D-UDは上部のプレートに2台の雲台を搭載させるため，雲台同士の衝突を回避する必要がある．そこで，雲台同士の距離を広げるため，アルミプレートを作成した(Fig.\ref{plate})．
@@ -431,20 +489,45 @@ D-UDは異なる位置の人物に向けて情報支援を行う必要がある�
 \subsubsection{カメラ}
 D-UDに360°パノラマ画像が取得なRICOH Theta Vを搭載した(Fig.\ref{ThetaV})．Theta Vは2枚の魚眼レンズで撮影した円形画像を，正距円筒図法により360°パノラマ画像に変換するカメラである．D-UDは，UDよりも広範囲な環境認識が必要になるためTheta Vを採用している．Theta Vの仕様をTable \ref{table:ThetaV_TABLE}に示す．
 
-\begin{figure}
-\begin{minipage}{0.4\textwidth}
+% \begin{figure}
+% \begin{minipage}{0.4\textwidth}
+% \begin{center}
+% \includegraphics[scale=0.3]{figs/theta_v.eps}
+% \caption{RICOH Theta V}
+% \label{ThetaV}
+% \end{center}
+% \end{minipage}
+% \begin{minipage}{0.5\textwidth}
+% \begin{center}
+% \makeatletter
+% \def\@captype{table}
+% \makeatother
+% \caption{Specifications of RICOH Theta V}
+% 	\begin{tabular}[tbp]{|c|c|}
+% 		\hline 
+% 		External size(WHD) & 45.2x130.6x22.9[mm] \\\hline
+% 		Weight & 121[g] \\\hline
+% 		Resolution & 1024×512[pixels] \\\hline
+% 		Frame rate & 29.97[FPS] \\\hline
+% 		Connection type & Wifi \\\hline
+% 	\end{tabular}
+% \label{table:ThetaV_TABLE}
+% \end{center}
+% \end{minipage}
+% \end{figure}
+
+\begin{figure}[h]
 \begin{center}
-\includegraphics[scale=0.3]{figs/theta_v.eps}
+\includegraphics[clip, width=5cm]{figs/theta_v.eps}
 \caption{RICOH Theta V}
 \label{ThetaV}
 \end{center}
-\end{minipage}
-\begin{minipage}{0.5\textwidth}
-\begin{center}
-\makeatletter
-\def\@captype{table}
-\makeatother
-\caption{Specifications of RICOH Theta V}
+\end{figure}
+
+\begin{table}[h]
+	\caption{Specifications of RICOH Theta V}
+	\label{table:ThetaV_TABLE}
+	\centering 
 	\begin{tabular}[tbp]{|c|c|}
 		\hline 
 		External size(WHD) & 45.2x130.6x22.9[mm] \\\hline
@@ -453,28 +536,53 @@ D-UDに360°パノラマ画像が取得なRICOH Theta Vを搭載した(Fig.\ref{
 		Frame rate & 29.97[FPS] \\\hline
 		Connection type & Wifi \\\hline
 	\end{tabular}
-\label{table:ThetaV_TABLE}
-\end{center}
-\end{minipage}
-\end{figure}
+\end{table}
 
 \subsubsection{Laser Range Finder}
 D-UDに北陽電機のLaser Range Finder(以後 LRF)であるUTM-30LXを2台搭載している(Fig.\ref{hokuyo})．Fig.\ref{DUD}で示したように，D-UDの前後にLRFを取り付けることで，全方位をセンシングすることができる．このLRFは，D-UDの自己位置推定や障害物等との衝突回避に用いられる．Table \ref{table:hokuyo}にLRFの仕様を示す.
 
-\begin{figure}
-\begin{minipage}{0.4\textwidth}
+% \begin{figure}
+% \begin{minipage}{0.4\textwidth}
+% \begin{center}
+% \includegraphics[scale=0.5]{figs/lrf.eps}
+% \caption{Hokuyo UTM30-LX}
+% \label{hokuyo}
+% \end{center}
+% \end{minipage}
+% \begin{minipage}{0.5\textwidth}
+% \begin{center}
+% \makeatletter
+% \def\@captype{table}
+% \makeatother
+% \caption{Specifications of Hokuyo UTM30-LX}
+% 	\begin{tabular}[tbp]{|c|c|}
+% 		\hline 
+% 		External size(WHD) & 60x60x87[mm] \\\hline
+% 		Weight & 0.37[kg] \\\hline
+% 		Resolution(Distance) & 1.0[mm] \\\hline
+% 		Resolution(Angle) & 0.25[deg] \\\hline
+% 		Accuracy of measure & \begin{tabular}{c}0.1-10[m]:$\pm$ 30[mm]\\10-30[m]:$\pm$50[mm]\end{tabular}\\ \hline
+% 		Scan range(Distance) & 60[m] \\\hline
+% 		Scan range(Angle) & 0.25[deg] \\\hline
+% 		Scanning time(Distance) & 25[msec] \\\hline
+% 	\end{tabular}
+% \label{table:hokuyo}
+% \end{center}
+% \end{minipage}
+% \end{figure}
+
+\begin{figure}[h]
 \begin{center}
-\includegraphics[scale=0.5]{figs/lrf.eps}
+\includegraphics[clip, width=5cm]{figs/lrf.eps}
 \caption{Hokuyo UTM30-LX}
 \label{hokuyo}
 \end{center}
-\end{minipage}
-\begin{minipage}{0.5\textwidth}
-\begin{center}
-\makeatletter
-\def\@captype{table}
-\makeatother
-\caption{Specifications of Hokuyo UTM30-LX}
+\end{figure}
+
+\begin{table}[h]
+	\caption{Specifications of Hokuyo UTM30-LX}
+	\label{table:hokuyo}
+	\centering 
 	\begin{tabular}[tbp]{|c|c|}
 		\hline 
 		External size(WHD) & 60x60x87[mm] \\\hline
@@ -486,32 +594,7 @@ D-UDに北陽電機のLaser Range Finder(以後 LRF)であるUTM-30LXを2台搭�
 		Scan range(Angle) & 0.25[deg] \\\hline
 		Scanning time(Distance) & 25[msec] \\\hline
 	\end{tabular}
-\label{table:hokuyo}
-\end{center}
-\end{minipage}
-\end{figure}
-
-%\begin{figure}[h]
-%\begin{center}
-%\includegraphics[clip, width=5cm]{figs/theta_v.eps}
-%\caption{RICOH Theta V}
-%\label{ThetaV}
-%\end{center}
-%\end{figure}
-
-%\begin{table}[h]
-%	\caption{Specifications of RICOH Theta V}
-%	\label{table:ThetaV_TABLE}
-%	\centering 
-%	\begin{tabular}[tbp]{|c|c|}
-%		\hline 
-%		External size(WHD) & 45.2x130.6x22.9[mm] \\\hline
-%		Weight & 121[g] \\\hline
-%		Resolution & 1024×512[pixels] \\\hline
-%		Frame rate & 29.97[FPS] \\\hline
-%		Connection type & Wifi \\\hline
-%	\end{tabular}
-%\end{table}
+\end{table}
 
 \section{ソフトウェア構成}
 D-UDの制御には，移動プラットフォームの制御，複数のセンサを使った周囲の環境情報の認識，パン・チルト機構プロジェクタの制御など複数の制御を並列的に処理する必要がある．そこで，本研究ではD-UDの開発において並列処理とコードの再利用性など，ロボット効率的な開発を可能にするミドルウェアのWillow Garage社のROS(Robot Operating System)\cite{ROS}を利用する．
@@ -549,7 +632,7 @@ ROSとは，ロボットソフトウェアプラットフォームの一種で�
    front\_lidar & D-UDの前方のHokuyo UTM-30LXのセンサ値をパブリッシュするノード． \\ \hline
    rear\_lidar & D-UDの後方のHokuyo UTM-30LXのセンサ値をパブリッシュするノード． \\ \hline
    merge\_lidar\_node & front\_lidarとrear\_lidarからパブリッシュされたトピックをサブスクライブし，それらを統合した後パブリッシュするノード． \\ \hline
-   left\_projection\_node & robot\_states\_publisherからパブリッシュされたトピックを受信し，パラメータから取得した画像・動画名を歪み補正して左側のプロジェクタから投影するノード，． \\ \hline
+   left\_projection\_node & robot\_states\_publisherからパブリッシュされたトピックを受信し，パラメータから取得した画像・動画名を歪み補正して左側のプロジェクタから投影するノード． \\ \hline
    right\_projector\_node & robot\_states\_publisherからパブリッシュされたトピックを受信し，パラメータから取得した画像・動画名を歪み補正して右側のプロジェクタから投影するノード． \\ \hline
 
   \end{tabular}
@@ -558,7 +641,7 @@ ROSとは，ロボットソフトウェアプラットフォームの一種で�
 \end{table}
 
 \subsection{ロボットモデリングとシミュレーション}
-ROSでは，ロボット制御のための視覚化ツールとシミュレーションツールが存在する．これらのツールを利用することで，ロボットの実機を制御するプログラムを開発する際，計算機上で物理計算をシミュレーションすることで，手軽に事前の動作確認が可能となり開発効率が改善される．本研究でも，シミュレーションを活用するためD-UDのURDF(URDF(Unified
+ROSでは，ロボット制御のための視覚化ツールとシミュレーションツールが存在する．これらのツールを利用することで，ロボットの実機を制御するプログラムを開発する際，計算機上で物理計算をシミュレーションすることで，手軽に事前の動作確認が可能となり開発効率が改善される．本研究でも，シミュレーションを活用するためD-UDのURDF(Unified
 Robot Description)モデルの作成した(Fig.\ref{fig:left})．Fig.\ref{fig:right}はRViz(ROS Visualization)という3次元視覚化ツールを用いてD-UDのURDFモデルを表示している．また，シミュレーションツールにはGAZEBO\cite{GAZEBO}を採用した．GAZEBOは様々なロボットセンサをモデル化するだけでなく，実世界の剛体物理もシミュレーション環境中でモデル化できる3Dロボットモデルシミュレータである．
 
 \begin{figure}[tbp]
@@ -667,7 +750,7 @@ UDが人に快適かつ効果的に情報投影を行うためには，人の視
 \subsection{GAZEBOとROSを用いた分散アーキテクチャ}
 \ref{DQNの問題}節で述べた学習時間の短縮する仕組みとして，本研究ではGAZEBOとROSを用いたエージェントの分散学習を導入した．複数のエージェントで学習を行う場合，各エージェントにつき環境が必要になるため複数のシミュレーション環境を並列して同時に起動しなければならない．ROSはマスタ(master)というノード間の接続とメッセージ通信の実現に必要なサーバ（ネームサーバ）を持つ．しかし，1つのマスターにつき同名のノードを複数登録することはできない．よって，本研究では異なるROSマスタを設定し，複数の独立したROSネットワークを構築する方法を採用した．ROSマスタとノード間の通信はXML-PRCを用いて行われ，環境変数の「\$ROS\_MASTER\_URI」と「\$GAZEBO\_MASTER\_URI」により通信ポートが決定される．そのため，任意のアドレスに変更するためには，ターミナルで以下のコマンドを実行する．
 
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
 export ROS_MASTER_URI=http://localhost:11350
 export GAZEBO_MASTER_URI=http://localhost:11340
 \end{lstlisting}
